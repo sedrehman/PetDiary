@@ -3,18 +3,22 @@
 	<head>
 		<title>
 		</title>
-		<link rel = "stylesheet" type = "text/css" href = "css.css" />
+		<link rel = "stylesheet" type = "text/css" href = "style.css" />
 		<style>
 		</style>
 		<script src="jstemp.js">
 		</script>
 	</head>
-	<body onload = "initialize();">
-		<div>Welcome to Pet Diary</div>
-		<div id = "box">
+	<body class = "centered" onload = "initialize();">
+		<h1 id = "title">Welcome to Pet Diary</h1>
+		<div id = "loginBox">
 			<div>Username:</div> <input type = "text"> </input>
+			<br>
 			<div>Password:</div> <input type = "text"> </input>
-			<div>Not Registered? Click here to make account!</div>
+			<br><br>
+			<button>Log In</button>
+			<br><br>
+			<a href = "signUp.html">Not Registered? Click here to make account!</a>
 		</div>
 	</body>
 </html>

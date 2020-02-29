@@ -1,14 +1,27 @@
-body
+.centered
 {
 	text-align : center;
 }
 
-#box{
+#loginBox{
     border-style: solid;
     border-width: 2px;
 	box-sizing: border-box;
     display:inline-block;
 	top: 25%;
-	left: 10%;
+	padding: 50px;
+	left: 38%;
 	position:absolute;
 }
+
+#signUpBox{
+    border-style: solid;
+    border-width: 2px;
+	box-sizing: border-box;
+	padding: 50px;
+    display:inline-block;
+	top: 10%;
+	left: 41%;
+	position:absolute;
+}
+

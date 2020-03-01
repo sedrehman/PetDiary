@@ -40,10 +40,21 @@
 		</div>
     </nav>
     <div>
-        <div class="form-group shadow-textarea">
+        <div class="create_feed">
             <label for="exampleFormControlTextarea6">Type something in the following. . .</label>
             <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span onclick="openFile()"class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+            </div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+            </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>

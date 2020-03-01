@@ -67,3 +67,17 @@
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~ end of user profile ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/* ~~~~~~~~~~~~~~~~~~~~~~ start of create feed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+.shadow-textarea {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 3%;
+}
+.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+.shadow-textarea textarea.form-control {
+    padding-left: 0.8rem;
+}
+
+/* ~~~~~~~~~~~~~~~~~~~~~~ end of create feed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/

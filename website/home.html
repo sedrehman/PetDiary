@@ -3,12 +3,10 @@
 	<head>
 		<title>
 		</title>
-		<link rel = "stylesheet" type = "text/css" href = "style.css" />
+		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<link rel = "stylesheet" type = "text/css" href = "style.css" />
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-		<style>
-		</style>
-		<script src="script.js">
 		</script>
 	</head>
 	<body onload = "initialize();">
@@ -21,12 +19,16 @@
 					<input class="form-control" placeholder="Search" style="width:100%">
 				</form>
 				<ul class="navbar-nav align-items-right">
+					<li class="nav-item">
+						<a class="nav-link" href="createFeed.html">Create</a>
+					</li>
 					<li class="nav-item active">
 						<a class="nav-link" href="home.html">Home</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="profile.html">Profile</a>
 					</li>
+					
 					<li class="nav-item">
   						<a class="nav-link" href="edit.html">Edit</a>
 					</li>
@@ -57,6 +59,17 @@
                             Behind a padded physicist hums the blocked pains in the weekday! The liberal fishes my pathetic opponent throughout the geometry. The boot reflects in the excess! The salt purges under the sniff. The analyst disgusts a paint across a wicked neighborhood.
                             Behind a padded physicist hums the blocked pain</p>
 						</div>
+						<div class="btn-group btn-group-toggle" data-toggle="buttons">
+						  <label class="btn btn-link	 col-9">
+							<a href="item.html" class="btn form-control btn-dark">View Post</a>
+						  </label>
+						  <label class="btn btn-link col-2">
+							<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Like</i> </button>
+						  </label>
+						  <label class="btn btn-link col-1">
+						    <input type="" class="form-control" id="likes" placeholder="0">
+						</label>
+						</div>
                     </div>
             	</div>
                 <div class="card col-12">
@@ -70,6 +83,17 @@
 					<hr>
                     <div class="card-body">
 						<img src="Profile_placeholder.png" class="card-img-top" alt="Picture">
+					</div>
+					<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					  <label class="btn btn-link	 col-9">
+						<a href="item.html" class="btn form-control btn-dark">View Post</a>
+					  </label>
+					  <label class="btn btn-link col-2">
+						<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Like</i> </button>
+					  </label>
+					  <label class="btn btn-link col-1">
+					    <input type="" class="form-control" id="likes" placeholder="0">
+					</label>
 					</div>
                 </div>
 				<div class="card col-12">
@@ -90,8 +114,20 @@
 						Behind a padded physicist hums the blocked pains in the weekday! The liberal fishes my pathetic opponent throughout the geometry. The boot reflects in the excess! The salt purges under the sniff. The analyst disgusts a paint across a wicked neighborhood.
 						Behind a padded physicist hums the blocked pain</p>
 					</div>
+					<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					  <label class="btn btn-link	 col-9">
+						<a href="item.html" class="btn form-control btn-dark">View Post</a>
+					  </label>
+					  <label class="btn btn-link col-2">
+						<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Like</i> </button>
+					  </label>
+					  <label class="btn btn-link col-1">
+					    <input type="" class="form-control" id="likes" placeholder="0">
+					</label>
+					</div>
 				</div>
 			</div>
 		</div>
 	</body>
+	<script src="script.js"></script>
 </html>

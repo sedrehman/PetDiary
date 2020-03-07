@@ -7,9 +7,14 @@
 }
 
 h1
-{ 
-	text-shadow: 0 0 3px #ffffff, 0 0 5px #000000; 
-} 
+{
+	text-shadow: 0 0 3px #ffffff, 0 0 5px #000000;
+}
+
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
 
 #loginBox{
     border-style: solid;

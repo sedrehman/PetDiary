@@ -1,0 +1,25 @@
+﻿PetDiary Reports
+
+
+Bootstrap
+
+
+What is Bootstrap
+Bootstrap is a front-end framework.
+
+
+
+
+What does Bootstrap accomplish in PetDiary
+It made some features easier to implement in the frontend, as the framework the tools to build them easily. 
+* The Navbar is built with bootstraps tools
+* The Home/Post page used bootstrap to display the feed as each post is a bootstrap object.
+
+
+How is Bootstrap used in-depth
+*  Navbar: A Navbar is a bootstrap object that is given in the framework, and is built to be used in creating a navbar. We used this for Navbar on every page as it makes it easy to make and looks professional.
+* Home/Post Page: We use cards that take up the whole row to display every post or comment. Cards are an object that is given in bootstrap essentially they are a square that can hold information and then can be grouped with other cards inside the card-group.
+
+
+Licensing
+Bootstrap is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.

@@ -1,0 +1,17 @@
+﻿PetDiary Reports
+
+
+Express Handlebars
+
+
+What is Express-Handlebars
+Its a view engine for express. It adds a lot of features that were removed like the concept of "layout",  "partials", support a directory of partials, etc. 
+
+
+What does Express-Handlebars accomplish in PetDiary
+We use handlebars layout to structure the code as its no longer a given feature in the current express.js framework, mainly used due to dockers.
+        
+
+
+Licensing
+This software is free to use under the Yahoo! Inc. BSD license.

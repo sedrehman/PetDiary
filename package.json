@@ -1,0 +1,24 @@
+{
+  "name": "petdiary",
+  "version": "1.0.0",
+  "description": "testing docker for Pet Diary",
+  "main": "pet_diary.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sedrehman/PetDiary.git"
+  },
+  "author": "pet.diary.gang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sedrehman/PetDiary/issues"
+  },
+  "homepage": "https://github.com/sedrehman/PetDiary#readme"
+}

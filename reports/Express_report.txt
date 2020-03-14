@@ -1,0 +1,16 @@
+﻿PetDiary Reports
+
+
+Express.js
+
+
+What is Express.js
+Express.js is a web application framework. It’s built on top of Node.js which runs on C++. 
+
+
+What does Express.js accomplish in PetDiary
+It builds the sockets for us and handles HTTP functions such as GET. It handles the server-side GET requests in a simple manner. All you have to do is set a path to a specific request in a single line of code. It then reads that set path and sends the file requested. It can be images, CSS, HTML or whatever you wish to send. Its reduces the workload you would have to go through to create a server manually. No more byte parsing or string parsing. Thus far we only used it to handle GET requests. Later we will also implement POST and AJAX. 
+
+
+Licensing
+Express is under MIT license. More details can be found here:  https://opensource.org/licenses/MIT

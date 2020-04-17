@@ -13,19 +13,17 @@
 	<img src="../images/bunham.jpg" id="bunham">
 	<img src="../images/turtleparrot.jpg" id="turtleparrot">
 	<div id = "signUpBox">
-			<label for="user">Username:</label><br> <input id = "user" type = "text"> </input>
+		<form action="/form-path" method="post" enctype="multipart/form-data">
+			<label for="name">Name: </label><br/><br>
+			<input id="name" type="text"><br/><br>
+			<label for="pass">Password: </label><br/><br>
+			<input id="pass" type="text"><br/><br>
+			<label for="email">Email: </label><br/><br>
+			<input id="email" type="text"><br/><br>
+			<input type="submit" value="Sign Up">
 			<br><br>
-			<label for = "pass">Password:</label><br> <input id = "pass" type = "text"> </input>
-			<br><br>
-			<label for = "cPass">Confirm Password:</label><br> <input id = "cPass" type = "text"> </input>
-			<br><br>
-			<label for = "ign">Display Name:</label><br> <input id = "ign" type = "text"> </input>
-			<br><br>
-			<label for = "email">E-mail:</label><br> <input id = "email"type = "text"> </input>
-			<br><br>
-			<a href = "login.html"><button>Create Account</button></a>
-			<br><br><br>
-		<a href = "login.html">Already have an account? Log in here!</a>
+			<a href = "login.html">Already have an account? Log in here!</a>
+		</form>
 	</div>
 	</body>
 </html>

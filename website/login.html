@@ -14,13 +14,15 @@
 		<h2>A social media platform where you can show the world your pets!</h2>
 		<img src="../images/banner.jpg" id="banner">
 		<div id = "loginBox">
-			<label for = "user">Username:</label><br> <input id = "user" type = "text"> </input>
-			<br>
-			<label for = "password">Password:</label><br> <input id = "password" type = "text"> </input>
-			<br><br>
-			<a href = "home.html"> <button>Log In</button></a>
+		<form action="/form-path" method="post" enctype="multipart/form-data">
+			<label for="email">Email: </label><br/><br>
+			<input id="email" type="text"><br/><br>
+			<label for="pass">Password: </label><br/><br>
+			<input id="pass" type="text"><br/><br>
+			<input type="submit" value="Log In">
 			<br><br>
 			<a href = "signUp.html">Not Registered? Click here to make account!</a>
+		</form>
 		</div>
 	</body>
 </html>

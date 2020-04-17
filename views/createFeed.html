@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></link>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
+	<link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <script src="script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
+		<div class="container-fluid" style="min-height: 42px;">
+			<ul class="navbar-nav align-items-left">
+			<a class="navbar-brand" href="home.html">PETDIARY</a>
+			</ul>
+			<form class="form-inline" style="width:100%">
+				<input class="form-control" placeholder="Search" style="width:100%">
+			</form>
+			<ul class="navbar-nav align-items-right">
+				<li class="nav-item">
+					<a class="nav-link active" href="createFeed.html">Create</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="home.html">Home</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="profile.html">Profile</a>
+				</li>
+
+				<li class="nav-item">
+					  <a class="nav-link" href="edit.html">Edit</a>
+				</li>
+				<li class="nav-item">
+					  <a class="nav-link" href="messages.html">Messages</a>
+				</li>
+				<a href="Login.html" class="btn btn-danger pull-right" style="float: right;"role="button">Logout</a>
+			</ul>
+		</div>
+    </nav>
+
+
+    <br>
+    <div class="container">
+        <ul class="nav nav-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#text">Text</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#image">Image</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#video">Video</a>
+            </li>
+        </ul>
+    </div>
+        <div class="tab-content">
+            <div id="text" class="container tab-pane active">
+                <form action="/file-text" method="post" enctype="multipart/form-data">
+                	<fieldset>
+                		<div class="create_feed">
+                			<label for="exampleFormControlTextarea6">Type something in the following. . .</label>
+                			<textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+                		</div>
+                        <div class="form__submit-button">
+                          <input type="submit">
+                        </div>
+                	</fieldset>
+                </form>
+            </div>
+            <div id="image" class="container tab-pane">
+                <form action="/file-image" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span onclick="openFile()"class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="multimedia" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="video" class="container tab-pane">
+                <form action="/file-video" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span onclick="openFile()"class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="multimedia" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+</body>
+</html>

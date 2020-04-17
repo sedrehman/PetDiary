@@ -1,5 +1,6 @@
 const express = require('express');
 var exphbs = require('express-handlebars');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 
 var firebase = require("firebase/app");
@@ -24,6 +25,48 @@ app.get('/', function (req, res) {
          res.sendFile(__dirname + "/website/signUp.html")
     }
 );
+
+app.post('/file-text', function(req, res) {
+  const post = models.feed.build({
+    id: req.session.id,
+    username: req.session.username,
+    name: req.name.file,
+    type: "text",
+    creation_time: Date.now()
+  })
+
+  post.save().then(function(post) {
+    console.log(post);
+  })
+})
+
+app.post('/file-image', function(req, res) {
+  const post = models.feed.build({
+    id: req.session.id,
+    username: req.session.username,
+    name: req.name.file,
+    type: "image",
+    creation_time: Date.now()
+  })
+
+  post.save().then(function(post) {
+    console.log(post);
+  })
+})
+
+app.post('/file-video', function(req, res) {
+  const post = models.feed.build({
+    id: req.session.id,
+    username: req.session.username,
+    name: req.name.file,
+    type: "video",
+    creation_time: Date.now()
+  })
+
+  post.save().then(function(post) {
+    console.log(post);
+  })
+})
 
 // app.get('/signUp.html', function (req, res) {
 //     res.sendFile(__dirname + "/website/signUp.html")
@@ -103,7 +146,7 @@ app.get('/', function (req, res) {
 
 // app.get('/images/cute_kitten.jpg', function (req, res) {
 //     res.sendFile(__dirname + "/images/cute_kitten.jpg")
-    
+
 // }
 // );
 

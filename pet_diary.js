@@ -88,6 +88,20 @@ app.post('/file-video', function(req, res) {
   })
 })
 
+app.post('/create-comment', function(req, res) {
+  const post = models.feed.build({
+    id: req.session.id,
+    username: req.session.username,
+    name: req.name.file,
+    type: "video",
+    creation_time: Date.now()
+  })
+
+  post.save().then(function(post) {
+    console.log(post);
+  })
+})
+
 // app.get('/signUp.html', function (req, res) {
 //     res.sendFile(__dirname + "/website/signUp.html")
 // }

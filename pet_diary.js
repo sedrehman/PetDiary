@@ -29,7 +29,7 @@ const upload = multer({
 		checkFileType(file, cb);
 	}
 }).single('myImage');
-  
+
 // Check File Type
 function checkFileType(file, cb){
 	// Allowed ext
@@ -38,7 +38,7 @@ function checkFileType(file, cb){
 	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 	// Check mime
 	const mimetype = filetypes.test(file.mimetype);
-  
+
 	if(mimetype && extname){
 	  	return cb(null,true);
 	} else {
@@ -108,9 +108,6 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 
 app.post('/image_submit', function(req, res) {
-	
-	
-	
 	upload(req, res, (err) => {images
 		if(err){
 			console.log("~~~errrrrrroooooorrrrr~~~");
@@ -205,7 +202,7 @@ app.post('/auth', function(request, response) {
 	var password = request.body["password"];
 	password = removeBadChars(password);
 
-	
+
 	console.log("~~~~~~~~~~~~~~~log in ~~~~~~~~~~~~~~~~~");
 
 	if (username && password) {
@@ -220,13 +217,13 @@ app.post('/auth', function(request, response) {
 				response.send('Incorrect Username and/or Password!');
 			}
 			else if (results.length > 0) {
-				
+
 				sess.user_id = results[0]['id'];
 				sess.username = results[0]['name'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
-				
+
 			}
 			response.end();
 		});

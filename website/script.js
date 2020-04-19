@@ -33,7 +33,7 @@ function getPosts(hello){
 	for (i = 0; i < dictionary.length; i++)
 	{
 		x = new post(dictionary[i].user_name,dictionary[i].type,dictionary[i].name,dictionary[i].likes);
-		list.push(post)
+		list.push(x)
 	}
 
 	return list;

@@ -2,15 +2,16 @@
 function initialize()
 {
 	x = document.getElementById("hey")
-	getSQL()
+	setInterval(getSQL(), 1000);
 }
 
 
-function post(un,type,content,likes) {
+function post(un,type,content,likes, feedID) {
 	this.un = un
 	this.type = type
 	this.content = content
 	this.likes = likes
+	this.feedID = feedID;
 }
 
 function getSQL(){
@@ -40,7 +41,7 @@ function getPosts(hello){
 
 	for (i = 0; i < dictionary.length; i++)
 	{
-		x = new post(dictionary[i].user_name, dictionary[i].type, dictionary[i].name, dictionary[i].likes);
+		x = new post(dictionary[i].user_name, dictionary[i].type, dictionary[i].name, dictionary[i].likes, dictionary[i].feed_id);
 		console.log(x);
 		list.push(x)
 	}
@@ -49,12 +50,14 @@ function getPosts(hello){
 }
 
 function sendPosts(hello){
-	list = getPosts(hello)
+	post_body.innerHTML = "";
+	list = getPosts(hello);
 	console.log(list.length);
 	var i;
 	var un;
 	var content;
 	var likes;
+	var feedID;
 	for(i = 0; i<list.length;i++)
 	{
 		un = list[i].un;
@@ -79,10 +82,11 @@ function sendPosts(hello){
 			// content = "<img src="+imge+">";
 			console.log(content);
 		}
-			
+		
+		feedID = list[i].feedID;
+		
 
-
-		post_body.innerHTML = post_body.innerHTML + "<div class=\"container\"><div class=\"card-group\"><div class=\"card col-12\"><div class=\"card-body d-flex flex-row\"><img src=\"Profile_placeholder.png\" class=\"rounded-circle mr-3\" height=\"70px\" width=\"70px\" alt=\"avatar\"><div><h4 class=\"card-title font-weight-bold mb-2\"><a href = \"profile2.html\">"+un+"</a></h4></div></div><hr><div class=\"card-body\"><p class=\"card-text\">"+content+"</p></div><div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\"><label class=\"btn btn-link	 col-7\"><a href=\"item.html\" class=\"btn form-control btn-dark\">View Post</a></label><label class=\"btn btn-link col-3\"><button class=\"btn btn-block btn-success\"><i class=\"fa fa-thumbs-up\">Like</i> </button></label><label class=\"btn btn-link col-2\"><label type=\"\" class=\"form-control\" id=\"likes\">"+likes+"</label></label></div></div></</div>"
+		post_body.innerHTML = post_body.innerHTML + "<div class=\"container\"><div class=\"card-group\"><div class=\"card col-12\"><div class=\"card-body d-flex flex-row\"><img src=\"Profile_placeholder.png\" class=\"rounded-circle mr-3\" height=\"70px\" width=\"70px\" alt=\"avatar\"><div><h4 class=\"card-title font-weight-bold mb-2\"><a href = \"profile.html\">"+un+"</a></h4></div></div><hr><div class=\"card-body\"><p class=\"card-text\">"+content+"</p></div><div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\"><label class=\"btn btn-link  col-7\"><a href=\"item.html?feed_id=" + feedID +"\" class=\"btn form-control btn-dark\">View Post</a></label><label class=\"btn btn-link col-3\"><button class=\"btn btn-block btn-success\"><i class=\"fa fa-thumbs-up\">Like</i> </button></label><label class=\"btn btn-link col-2\"><label type=\"\" class=\"form-control\" id=\"likes\">"+likes+"</label></label></div></div></</div>"
 	}
 }
 /*

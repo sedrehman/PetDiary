@@ -275,6 +275,49 @@ app.get('/get_feed', function(req, response){
 	});
 });
 
+
+
+app.get('/get_single_feed', function(req, response){
+	
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+
+	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed where `feed_id`=?",[feedID], function(error, results, fields) {
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+			console.log("logged in! ");
+			response.send(results);
+		}
+		response.end();
+	});
+});
+
+
+
+app.get('/get_comment', function(req, response){
+	
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+
+	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed", function(error, results, fields) {
+		// console.log(results);
+		// console.log("##################################################");
+		// console.log(JSON.stringify(results));
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("logged in! ");
+			response.send(results);
+
+		}
+		response.end();
+	});
+});
+
 app.use(function (req, res, next) {
 	console.log(req.originalUrl);
     res.status(404).send("404'ed")

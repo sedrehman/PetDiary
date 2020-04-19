@@ -5,17 +5,23 @@ var exphbs = require('express-handlebars');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer();
+const path = require('path');
+
+var file_name = 1;
 
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
 	destination: './website/images/',
-	filename: function(req, file, cb){
-		cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+	filename: function(req, file, callback){
+		var fl_nm = file_name.toString() + path.extname(file.originalname);
+		//callback(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+		file_name = file_name + 1;
+		callback(null, fl_nm);
 	}
 });
-  
+
+var textUpload = multer();
 // Init Upload
 const upload = multer({
 	storage: storage,
@@ -23,7 +29,7 @@ const upload = multer({
 		checkFileType(file, cb);
 	}
 }).single('myImage');
-  
+
 // Check File Type
 function checkFileType(file, cb){
 	// Allowed ext
@@ -32,15 +38,13 @@ function checkFileType(file, cb){
 	const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
 	// Check mime
 	const mimetype = filetypes.test(file.mimetype);
-  
+
 	if(mimetype && extname){
 	  	return cb(null,true);
 	} else {
 	  	cb('Error: Images Only!');
 	}
 }
-
-
 
 
 
@@ -82,14 +86,15 @@ app.use(express.static('website'));
 
 
 app.get('/', function (req, res) {
-         res.sendFile(__dirname + "/website/signUp.html")
+		 res.sendFile(__dirname + "/website/signUp.html");
     }
 );
 
-app.post('/file-text', upload.single("feed_text_body") ,function(req, res) {
+app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
+	//console.log(feed_body);
 	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "text", feed_body], function(err, result){
         if(err){
 			throw err;
@@ -98,21 +103,38 @@ app.post('/file-text', upload.single("feed_text_body") ,function(req, res) {
 			res.redirect('./home.hbs');
 		}
     });
-	
+
 }) ;
 
 
-app.post('/image-submit', upload.single("filename"), function(req, res) {
-	var feed_body = req.body["feed_text_body"];
-	feed_body = removeBadChars(feed_body);
-	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "img", feed_body], function(err, result){
-        if(err){
-			throw err;
-		}else{
-			console.log("record innserted into file-image");
-			res.redirect('./home.html');
+app.post('/image_submit', function(req, res) {
+
+
+
+	upload(req, res, (err) => {images
+		if(err){
+			console.log("~~~errrrrrroooooorrrrr~~~");
+			console.log(err);
+		}else {
+			if(req.file == undefined){
+				console.log("undefined1234567890");
+			} else {
+				console.log("##########################");
+				console.log(req.file.filename);
+				console.log("##########################");
+
+				connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "img","images/"+req.file.filename ], function(err, result){
+				    if(err){
+						throw err;
+					}else{
+						console.log("record innserted into file-image");
+						res.redirect('./home.html');
+					}
+				});
+			}
 		}
-    });
+	});
+
 });
 
 
@@ -120,7 +142,7 @@ app.post('/file-video', function(req, res) {
 	const post = models.feed.build({
 		id: req.session.id,
 		username: req.session.username,
-		name: req.name.file,
+		name: req.name.file,filePath,
 		type: "video",
 		creation_time: Date.now()
 	});
@@ -183,7 +205,7 @@ app.post('/auth', function(request, response) {
 	var password = request.body["password"];
 	password = removeBadChars(password);
 
-	
+
 	console.log("~~~~~~~~~~~~~~~log in ~~~~~~~~~~~~~~~~~");
 
 	if (username && password) {
@@ -198,13 +220,13 @@ app.post('/auth', function(request, response) {
 				response.send('Incorrect Username and/or Password!');
 			}
 			else if (results.length > 0) {
-				
+
 				sess.user_id = results[0]['id'];
 				sess.username = results[0]['name'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
-				
+
 			}
 			response.end();
 		});
@@ -218,6 +240,7 @@ app.post('/auth', function(request, response) {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 app.use(function (req, res, next) {
+	console.log(req.originalUrl);
     res.status(404).send("404'ed")
 });
 

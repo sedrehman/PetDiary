@@ -1,20 +1,26 @@
+
+
 function initialize()
 {
 	x = document.getElementById("hey")
 	test()
 
 }
-function loadpost(){
-	const request = new XMLHttpRequest();
-	request.onreadystatechange = function(){
-		if(this.readyState==4 && this.status == 200)
-		{
-			sendPosts();
-		}
-	}
-	request.open("GET","pet_diary.js");
-	request.send();
-}
+var request = new XMLHttpRequest();
+
+request.onreadystatechange = function(){	
+    if	(this.readyState === 4 && this.status === 200){	
+        // request.open('GET', 'after.txt', true);
+		var ress = JSON.stringify(this.response);
+		console.log(ress);
+        //Do something with the response
+        changeParagraph(this.responseText);	
+    }	
+};	
+request.open("GET", "/get_feed", true);	
+request.send();
+
+
 //i dont know how to access SQL files so I just wrote insert sql pseudo code for now
 function getSQL(){
 	//var dictionary = *insert sql pseudo code;

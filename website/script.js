@@ -1,7 +1,6 @@
-
 function initialize()
 {
-	x = document.getElementById("hey")
+	post_body = document.getElementById("hey")
 	setInterval(getSQL(), 1000);
 }
 
@@ -23,12 +22,6 @@ function getSQL(){
 	};	
 	request.open("GET", "/get_feed", true);	
 	request.send();
-}
-
-function initialize()
-{
-	post_body = document.getElementById("hey")
-	getSQL()
 }
 
 function getPosts(hello){

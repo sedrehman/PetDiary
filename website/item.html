@@ -7,9 +7,9 @@
 		<link rel = "stylesheet" type = "text/css" href = "style.css" />
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 		</script>
-		<script src="script.js"></script>
+		<script src="comment_handler.js"></script>
 	</head>
-	<body onload = "loadPost();">
+	<body onload = "initialize();">
 
 		<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
 			<div class="container-fluid" style="min-height: 42px;">
@@ -41,47 +41,53 @@
 			</div>
 		</nav>
 
+
 		<div class="container">
-				<div class="card-group">
-					<div class="card col-12">
-						<div class="card-body d-flex flex-row">
-					     <img src="Profile_placeholder.png" class="rounded-circle mr-3" height="70px" width="70px" alt="avatar">
-					     <div>
-					  	 <h4 class="card-title font-weight-bold mb-2">Username</h4>
-					     </div>
-					    </div>
-						<hr>
-                        <div class="card-body">
-                            <p class="card-text">post</p>
-						</div>
-						<div id="text" class="container tab-pane active">
-			                <form action="/comment" method="post" enctype="multipart/form-data">
-			                	<fieldset>
-			                		<div class="create_feed">
-			                			<label for="exampleFormControlTextarea6">Type something in the following. . .</label>
-			                			<textarea name="feed_text_body" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
-			                		</div>
-									</div>
-			                        <div class="form__submit-button">
-			                          <input type="submit" name="text-submit">
-			                        </div>
-			                	</fieldset>
-			                </form>
-					</div>
-						<!--
-						<div class="card-group d-flex">
-							<div class="card flex-fill border-0">
-								<div class="card-body flex-row">
-								  <div class="card-body">
-									<h5 class="card-title font-weight-bold mb-2">{{username}}</h5>
-									<p class="card-text">{{post.comment}}</p>
-									<hr>
-								  </div>
-								</div>
-							</div>
-						</div>!-->
-                    </div>
+			<div id = "hey">Content Here</div>
+			<!--
+			<div class="card-body d-flex flex-row">
+				<img src="Profile_placeholder.png" class="rounded-circle mr-3" height="70px" width="70px" alt="avatar">
+				<div>
+					<h4 id = "uName" class="card-title font-weight-bold mb-2">Load User Name Here</h4>
 				</div>
+			</div>
+			<hr>
+			<div class="card-body">
+				<p id = "postC" class="card-text">Load Content Here</p>
+			</div>-->
+
+
+
+			<div id="text" class="container tab-pane active">
+				<form action="/comment" method="post" enctype="multipart/form-data">
+					<fieldset>
+						<div class="create_feed">
+							<label for="commentSub">Type something in the following. . .</label>
+							<textarea name="commentS" class="form-control z-depth-1" id="CommentSub" rows="3" placeholder="Write something here..."></textarea>
+							<br>
+							<input type="submit" name="text-submit" value ="Send Comment">
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+
+			<div id = "hi">Comments Here</div>
+			<!--
+			<div id = "usercomment">
+				<div class="card-group d-flex">
+					<div class="card flex-fill border-0">
+						<div class="card-body flex-row">
+							<div class="card-body">
+							<h5 class="card-title font-weight-bold mb-2">{{username}}</h5>
+							<p class="card-text">{{post.comment}}</p>
+							<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			-->
 		</div>
 	</body>
 </html>

@@ -11,7 +11,7 @@ Bootstrap is a front-end framework.
 
 
 What does Bootstrap accomplish in PetDiary
-It made some features easier to implement in the frontend, as the framework the tools to build them easily. 
+It made some features easier to implement in the frontend, as the framework the tools to build them easily.
 * The Navbar is built with bootstraps tools
 * The Home/Post page used bootstrap to display the feed as each post is a bootstrap object.
 
@@ -23,3 +23,9 @@ How is Bootstrap used in-depth
 
 Licensing
 Bootstrap is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.
+
+Bootstrap source code->
+                        css > https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
+                        css stackpath -> https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css
+                        js - > https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
+                        js - > https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js (compatible with bootstrap handles tab navigation)

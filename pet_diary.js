@@ -61,6 +61,18 @@ connection.connect(function(err) {
 	}
 
 	console.log('Connected to the MySQL server.');
+	connection.query("SELECT `file_name` FROM lastSave where id=0", function(error, results, fields) {
+		// console.log(results);
+		// console.log("##################################################");
+		// console.log(JSON.stringify(results));
+		if(error){
+			console.log("could't load last save");
+		}
+		else{
+			file_name = results[0]['file_name'] + 1;
+			console.log("current filename = "+ file_name);
+		}
+	});
 });
 
 
@@ -85,13 +97,21 @@ app.use(express.static('website'));
 
 
 app.get('/', function (req, res) {
-		 res.sendFile(__dirname + "/website/signUp.html");
-    }
-);
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		
+	}else{
+		res.sendFile(__dirname + "/website/signUp.html");
+	}
+});
 
 
 app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
-
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
@@ -100,7 +120,7 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 			throw err;
 		}else{
 			console.log("record innserted into file-image");
-			res.redirect('./home.hbs');
+			res.redirect('./home.html');
 		}
     });
 
@@ -125,7 +145,12 @@ app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res)
 
 
 app.post('/image_submit', function(req, res) {
-	upload(req, res, (err) => {images
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	upload(req, res, (err) => {
 		if(err){
 			console.log("~~~errrrrrroooooorrrrr~~~");
 			console.log(err);
@@ -141,6 +166,11 @@ app.post('/image_submit', function(req, res) {
 				    if(err){
 						throw err;
 					}else{
+						connection.query("UPDATE lastSave  SET `file_name`=? where id=0", [file_name] , function(err, result){
+							if(err){
+								console.log("issue with file name");
+							}
+						});
 						console.log("record innserted into file-image");
 						res.redirect('./home.html');
 					}
@@ -153,17 +183,7 @@ app.post('/image_submit', function(req, res) {
 
 
 app.post('/file-video', function(req, res) {
-	const post = models.feed.build({
-		id: req.session.id,
-		username: req.session.username,
-		name: req.name.file,filePath,
-		type: "video",
-		creation_time: Date.now()
-	});
-
-	post.save().then(function(post) {
-		console.log(post);
-	});
+	res.send("sorry this is too much to handle, next phase we will get this done");
 });
 
 function removeBadChars(bad){

@@ -3,8 +3,10 @@ function initialize()
 	post_body = document.getElementById("hey")
 	post_comments = document.getElementById("hi")
 	//setInterval(getSQL(), 1000);
-test()
-test2()
+// test()
+// test2()
+	getSQLPost();
+	getSQLComments();
 }
 
 
@@ -30,8 +32,8 @@ function getSQLPost(){
 	};	
 	var feedid = document.URL;
 	var idx = feedid.indexOf("feed_id");
-	feedid = feedid.slice(idx+7, feedid.length);
-	request.open("GET", "/get_feed_single_feed?feed_id=", true);	
+	feedid = feedid.slice(idx+8, feedid.length);
+	request.open("GET", "/get_single_feed?feed_id=" + feedid, true);	
 	request.send();
 }
 
@@ -41,8 +43,11 @@ function getSQLComments(){
 		if	(this.readyState === 4 && this.status === 200){	
 			sendComments(JSON.parse(this.response));
 		}	
-	};	
-	request.open("GET", "/get_comments", true);	
+	};
+	var feedid = document.URL;
+	var idx = feedid.indexOf("feed_id");
+	feedid = feedid.slice(idx+8, feedid.length);
+	request.open("GET", "/get_comments?feed_id=" + feedid, true);	
 	request.send();
 }
 
@@ -63,8 +68,8 @@ function getPosts(hello){
 function sendPosts(hello){
 	list = getPosts(hello);
 
-	var un = error;
-	var content = error;
+	var un = "error";
+	var content = "error";
 
 	un = list[0].un;
 	console.log(un);
@@ -103,6 +108,7 @@ function getComments(hello){
 function sendComments(hello){
 	post_comments.innerHTML = "";
 	list = getComments(hello);
+	console.log(list);
 	var i;
 	var un;
 	var content;

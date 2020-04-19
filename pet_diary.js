@@ -127,13 +127,18 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 }) ;
 
 app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
-
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
-	var time = new Date();
-	var queryString = window.location.search;
-	let queryString = anyString.substring(anyString.length - 1)
-	connection.query("INSERT INTO comments ORDER BY creation_time DESC ( comment_id, `feed_id`, `username`, `comment`, `creation_time`) VALUES (?,?,?,?,?)", [id,queryString,sess.user_id, sess.username, feed_body,time], function(err, result){
+	
+	// var queryString = window.location.search;
+	// let queryString = anyString.substring(anyString.length - 1)
+	
+	connection.query("INSERT INTO comments ( comment_id, `feed_id`, `username`, `comment`, `creation_time`) VALUES (?,?,?,?,?)", [id,queryString,sess.user_id, sess.username, feed_body,time], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -280,7 +285,11 @@ app.get('/get_feed', function(req, response){
 
 
 app.get('/get_single_feed', function(req, response){
-	
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
@@ -289,7 +298,7 @@ app.get('/get_single_feed', function(req, response){
 			response.send('errrrroor!!!');
 		}
 		else if (results.length > 0) {
-			console.log("logged in! ");
+			console.log("found feed");
 			response.send(results);
 		}
 		response.end();
@@ -298,21 +307,19 @@ app.get('/get_single_feed', function(req, response){
 
 
 
-app.get('/get_comment', function(req, response){
+app.get('/get_comments', function(req, response){
 	
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
-	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed", function(error, results, fields) {
-		// console.log(results);
-		// console.log("##################################################");
-		// console.log(JSON.stringify(results));
+	connection.query("SELECT * FROM comments where `feed_id`= ?",[feedID], function(error, results, fields) {
+		
 		if(error){
 			response.send('errrrroor!!!');
 		}
 		else if (results.length > 0) {
 
-			console.log("logged in! ");
+			console.log("sending comments");
 			response.send(results);
 
 		}

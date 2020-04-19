@@ -1,17 +1,8 @@
-function initialize()
-{
-	x = document.getElementById("hey")
-	test()
-	getSQL()
-}
-
-class post {
-  constructor(un,type,content,likes) {
+function post(un,type,content,likes) {
 	this.un = un
 	this.type = type
 	this.content = content
 	this.likes = likes
-  }
 }
 
 function getSQL(){
@@ -23,6 +14,12 @@ function getSQL(){
 	};	
 	request.open("GET", "/get_feed", true);	
 	request.send();
+}
+
+function initialize()
+{
+	x = document.getElementById("hey")
+	getSQL()
 }
 
 function getPosts(hello){
@@ -49,11 +46,11 @@ function sendPosts(hello){
 	{
 		un = list[i].un;
 		likes = list[i].likes;
-		if(list[i].type.localeCompare("text")
+		if(list[i].type.localeCompare("text"))
 			content = list[i].content;
-		else if(list[i].type.localeCompare("video")
+		else if(list[i].type.localeCompare("video"))
 			content = list[i].content;
-		else(list[i].type.localeCompare("picture")
+		else(list[i].type.localeCompare("picture"))
 			content = list[i].content;
 		x.innerHTML = x.innerHTML + "<div class=\"container\"><div class=\"row col-12\"><div class=\"card-group\"><div class=\"card col-12\"><div class=\"card-body d-flex flex-row\"><img src=\"Profile_placeholder.png\" class=\"rounded-circle mr-3\" height=\"70px\" width=\"70px\" alt=\"avatar\"><div><h4 class=\"card-title font-weight-bold mb-2\"><a href = \"profile2.html\">"+un+"</a></h4></div></div><hr><div class=\"card-body\"><p class=\"card-text\">"+content+"</p></div><div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\"><label class=\"btn btn-link	 col-9\"><a href=\"item.html\" class=\"btn form-control btn-dark\">View Post</a></label><label class=\"btn btn-link col-2\"><button class=\"btn btn-block btn-success\"><i class=\"fa fa-thumbs-up\">Like</i> </button></label><label class=\"btn btn-link col-1\"><input type=\"\" class=\"form-control\" id=\"likes\" placeholder="+likes+"></label></div></div></div></</div>"
 	}
@@ -69,9 +66,6 @@ function test(){
 	}
 <<<<<<< HEAD
 }*/
-=======
-}
-
 
 function sendLike(){
 	request = new XMLHttpRequest();
@@ -94,4 +88,3 @@ function sendLike(){
     clearTimeout(ti);
     getData();
 }
->>>>>>> d1c4f1409edd4801ee6e3084fc6f23338885bcd9

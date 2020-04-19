@@ -4,21 +4,6 @@ function initialize()
 	test()
 	getSQL()
 }
-<<<<<<< HEAD
-=======
-var request = new XMLHttpRequest();
-
-request.onreadystatechange = function(){	
-    if	(this.readyState === 4 && this.status === 200){	
-        // request.open('GET', 'after.txt', true);
-
-		console.log(this.response);
-        //Do something with the response
-    }	
-};	
-request.open("GET", "/get_feed", true);	
-request.send();
->>>>>>> d1c4f1409edd4801ee6e3084fc6f23338885bcd9
 
 class post {
   constructor(un,type,content,likes) {

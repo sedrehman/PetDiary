@@ -72,12 +72,12 @@
                 </form>
             </div>
             <div id="image" class="container tab-pane">
-                <form action="/file-image" method="post">
+                <form action="/image_submit" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <input type="file" id="myFile" name="filename">
-                                <input type="submit" name = "image-submit">
+                                <input type="file" id="myFile" name="myImage">
+                                <input type="submit" name = "image_submit">
                             </div>
                         </div>
                     </fieldset>

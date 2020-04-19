@@ -108,9 +108,6 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 
 app.post('/image_submit', function(req, res) {
-
-
-
 	upload(req, res, (err) => {images
 		if(err){
 			console.log("~~~errrrrrroooooorrrrr~~~");

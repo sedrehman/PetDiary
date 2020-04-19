@@ -67,6 +67,7 @@
 							<br>
 							<input type="submit" name="text-submit" value ="Send Comment">
 						</div>
+<<<<<<< HEAD
 
 					</fieldset>
 				</form>
@@ -82,6 +83,32 @@
 							<h5 class="card-title font-weight-bold mb-2">{{username}}</h5>
 							<p class="card-text">{{post.comment}}</p>
 							<hr>
+=======
+						<div id="text" class="container tab-pane active">
+			                <form action="/comment-sub" method="post" enctype="multipart/form-data">
+			                	<fieldset>
+			                		<div class="create_feed">
+			                			<label for="exampleFormControlTextarea6">Type something in the following. . .</label>
+			                			<textarea name="feed_text_body" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+			                		</div>
+									</div>
+			                        <div class="form__submit-button">
+			                          <input type="submit" name="text-submit" value="Submit">
+			                        </div>
+			                	</fieldset>
+			                </form>
+					</div>
+						<!-- (comments are each a card)
+						<div class="card-group d-flex">
+							<div class="card flex-fill border-0">
+								<div class="card-body flex-row">
+								  <div class="card-body">
+									<h5 class="card-title font-weight-bold mb-2">{{username}}</h5>
+									<p class="card-text">{{post.comment}}</p>
+									<hr>
+								  </div>
+								</div>
+>>>>>>> 48301fd7338f4b6e55fdd33df5a11cdce3396c71
 							</div>
 						</div>
 					</div>

@@ -2,7 +2,6 @@ var mysql = require('mysql');
 const express = require('express');
 var session = require('express-session');
 var exphbs = require('express-handlebars');
-var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 const path = require('path');
@@ -127,6 +126,23 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 }) ;
 
+app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
+
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	var time = new Date();
+	var queryString = window.location.search;
+	let queryString = anyString.substring(anyString.length - 1)
+	connection.query("INSERT INTO comments ORDER BY creation_time DESC ( comment_id, `feed_id`, `username`, `comment`, `creation_time`) VALUES (?,?,?,?,?)", [id,queryString,sess.user_id, sess.username, feed_body,time], function(err, result){
+        if(err){
+			throw err;
+		}else{
+			console.log("record innserted into comment");
+		}
+    });
+
+}) ;
+
 
 app.post('/image_submit', function(req, res) {
 	if(!sess.user_id){
@@ -168,20 +184,6 @@ app.post('/image_submit', function(req, res) {
 
 app.post('/file-video', function(req, res) {
 	res.send("sorry this is too much to handle, next phase we will get this done");
-});
-
-app.post('/create-comment', function(req, res) {
-	const post = models.feed.build({
-		id: req.session.id,
-		username: req.session.username,
-		name: req.name.file,
-		type: "video",
-		creation_time: Date.now()
-	});
-
-	post.save().then(function(post) {
-		console.log(post);
-	});
 });
 
 function removeBadChars(bad){
@@ -275,6 +277,49 @@ app.get('/get_feed', function(req, response){
 	});
 });
 
+
+
+app.get('/get_single_feed', function(req, response){
+	
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+
+	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed where `feed_id`=?",[feedID], function(error, results, fields) {
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+			console.log("logged in! ");
+			response.send(results);
+		}
+		response.end();
+	});
+});
+
+
+
+app.get('/get_comment', function(req, response){
+	
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+
+	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed", function(error, results, fields) {
+		// console.log(results);
+		// console.log("##################################################");
+		// console.log(JSON.stringify(results));
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("logged in! ");
+			response.send(results);
+
+		}
+		response.end();
+	});
+});
+
 app.use(function (req, res, next) {
 	console.log(req.originalUrl);
     res.status(404).send("404'ed")
@@ -284,6 +329,3 @@ app.use(function (req, res, next) {
 app.listen(port, function () {
         console.log('Example app listening on port' + port + '!');
 });
-
-
-

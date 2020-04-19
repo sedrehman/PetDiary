@@ -9,12 +9,13 @@ Its a view engine for express. It adds a lot of features that were removed like 
 
 
 What does Express-Handlebars accomplish in PetDiary
-We use handlebars layout to structure the code as its no longer a given feature in the current express.js framework, mainly used due to dockers. Express-Handle bars allows us to modify the HTML file to render information from our express.js, express-handlebars is called everytime we use {{}} in the html document so for example {{username}} will show the username at the location in the html
+We use handlebars layout to structure the code as its no longer a given feature in the current express.js framework, mainly used due to dockers. Express-Handle bars allows us to modify the HTML file to render information from our express.js, express-handlebars is called everytime we use {{}} in the html document so for example {{username}} will show the username at the location in the html. (https://github.com/ericf/express-handlebars/blob/master/lib/express-handlebars.js), We can see from the base code that express handlebars uses prototypes to store different templates in handlebars that can be called and used by handlebars when called.
 
 
 
 Licensing
-This software is free to use under the Yahoo! Inc. BSD license.
+Express Handlebars is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.
 
-Source code-> node_modules\express-handlebars
+Source code->
            -> https://github.com/ericf/express-handlebars.git
+           -> node_modules\express-handlebars

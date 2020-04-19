@@ -1,0 +1,16 @@
+multer
+
+
+What is multer
+multer is node.js middleware that handles file uploads of type multipart/form/data
+
+
+What does express-session accomplish in PetDiary
+multer is used to allow us to upload images for a post but it is also used for the text posts. This is done by multer (https://github.com/expressjs/multer/blob/master/index.js), multer is primarily used for image upload as it allows us for the ability to store in a given location, due to the database holding a link to the location of the image and not the actual image.
+
+Licensing
+multer is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.
+
+multer source code->
+                        -> https://github.com/expressjs/multer
+                        -> node_modules\multer

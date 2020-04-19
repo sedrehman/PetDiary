@@ -1,4 +1,4 @@
-﻿PetDiary Reports
+PetDiary Reports
 
 
 Bootstrap
@@ -28,4 +28,4 @@ Bootstrap source code->
                         css > https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css
                         css stackpath -> https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css
                         js - > https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js
-                        js - > https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js (compatible with bootstrap handles tab navigation)
+                        js - > https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js (compatible with bootstrap handles tab navigation))

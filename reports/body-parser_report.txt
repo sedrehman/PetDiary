@@ -1,0 +1,20 @@
+PetDiary Reports
+
+
+body-parser
+Is a node.js body parsing middleware
+
+What is body-parser
+body-parser parses incoming request allowing express to read the body of the incoming request and parse it. I does this by taking in chunks of data that it receives since the information will be coming in packets and not one big chunk. The parser then will take the formatting type its given and parse the data together.
+
+What does body-parser accomplish in PetDiary
+* its used on JSON files to parse them. (https://github.com/expressjs/body-parser/blob/master/lib/types/json.js)
+* its used to parse through urlencoded bodies and parse them with the qs library (https://github.com/expressjs/body-parser/blob/master/lib/types/urlencoded.js)
+
+
+Licensing
+body-parser is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.
+
+body-parser source code->
+                        -> node_modules\body-parser
+                        -> https://github.com/expressjs/body-parser

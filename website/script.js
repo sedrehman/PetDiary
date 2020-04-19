@@ -11,8 +11,8 @@ var request = new XMLHttpRequest();
 request.onreadystatechange = function(){	
     if	(this.readyState === 4 && this.status === 200){	
         // request.open('GET', 'after.txt', true);
-		var ress = JSON.stringify(this.response);
-		console.log(ress);
+
+		console.log(this.response);
         //Do something with the response
         changeParagraph(this.responseText);	
     }	

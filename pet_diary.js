@@ -90,6 +90,7 @@ app.get('/', function (req, res) {
     }
 );
 
+
 app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 	var feed_body = req.body["feed_text_body"];
@@ -236,6 +237,24 @@ app.post('/auth', function(request, response) {
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+app.get('/get_feed', function(req, response){
+	connection.query("SELECT `feed_id`, `id`, `user_name`, `type`, `name`, `creation_time`, `likes` FROM feed", function(error, results, fields) {
+		// console.log(results);
+		// console.log("##################################################");
+		// console.log(JSON.stringify(results));
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("logged in! ");
+			response.send(results);
+
+		}
+		response.end();
+	});
+});
+
 app.use(function (req, res, next) {
 	console.log(req.originalUrl);
     res.status(404).send("404'ed")
@@ -245,3 +264,6 @@ app.use(function (req, res, next) {
 app.listen(port, function () {
         console.log('Example app listening on port' + port + '!');
 });
+
+
+

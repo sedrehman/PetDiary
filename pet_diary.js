@@ -2,7 +2,6 @@ var mysql = require('mysql');
 const express = require('express');
 var session = require('express-session');
 var exphbs = require('express-handlebars');
-var session = require('express-session');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 const path = require('path');
@@ -107,6 +106,23 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 }) ;
 
+app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
+
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	var time = new Date();
+	var queryString = window.location.search;
+	let queryString = anyString.substring(anyString.length - 1)
+	connection.query("INSERT INTO comments ORDER BY creation_time DESC ( comment_id, `feed_id`, `username`, `comment`, `creation_time`) VALUES (?,?,?,?,?)", [id,queryString,sess.user_id, sess.username, feed_body,time], function(err, result){
+        if(err){
+			throw err;
+		}else{
+			console.log("record innserted into comment");
+		}
+    });
+
+}) ;
+
 
 app.post('/image_submit', function(req, res) {
 	upload(req, res, (err) => {images
@@ -141,20 +157,6 @@ app.post('/file-video', function(req, res) {
 		id: req.session.id,
 		username: req.session.username,
 		name: req.name.file,filePath,
-		type: "video",
-		creation_time: Date.now()
-	});
-
-	post.save().then(function(post) {
-		console.log(post);
-	});
-});
-
-app.post('/create-comment', function(req, res) {
-	const post = models.feed.build({
-		id: req.session.id,
-		username: req.session.username,
-		name: req.name.file,
 		type: "video",
 		creation_time: Date.now()
 	});
@@ -264,6 +266,3 @@ app.use(function (req, res, next) {
 app.listen(port, function () {
         console.log('Example app listening on port' + port + '!');
 });
-
-
-

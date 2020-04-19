@@ -58,12 +58,26 @@ app.post('/file-text', upload.single("feed_text_body") ,function(req, res) {
         if(err){
 			throw err;
 		}else{
-			console.log("record innserted into file-image");
+			console.log("record innserted into file-text");
 			res.redirect('./home.html');
 		}
     });
-	
+
 }) ;
+
+app.get('/feed', function(req, res){
+var sql = ("id, user_name, type, name")
+  connection.query(sql, function(err, result){
+    if(err) {
+      console.log('Error in the query.');
+    } else {
+      console.log('Success!\n');
+      console.log(result);
+      var post = result;
+      return post;
+    }
+  });
+});
 
 
 app.post('/file-image', function(req, res) {
@@ -77,20 +91,6 @@ app.post('/file-image', function(req, res) {
 
 
 app.post('/file-video', function(req, res) {
-	const post = models.feed.build({
-		id: req.session.id,
-		username: req.session.username,
-		name: req.name.file,
-		type: "video",
-		creation_time: Date.now()
-	});
-
-	post.save().then(function(post) {
-		console.log(post);
-	});
-});
-
-app.post('/create-comment', function(req, res) {
 	const post = models.feed.build({
 		id: req.session.id,
 		username: req.session.username,
@@ -143,7 +143,7 @@ app.post('/auth', function(request, response) {
 	var password = request.body["password"];
 	password = removeBadChars(password);
 
-	
+
 	console.log("~~~~~~~~~~~~~~~log in ~~~~~~~~~~~~~~~~~");
 
 	if (username && password) {
@@ -158,13 +158,13 @@ app.post('/auth', function(request, response) {
 				response.send('Incorrect Username and/or Password!');
 			}
 			else if (results.length > 0) {
-				
+
 				sess.user_id = results[0]['id'];
 				sess.username = results[0]['name'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
-				
+
 			}
 			response.end();
 		});

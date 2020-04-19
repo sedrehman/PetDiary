@@ -48,12 +48,12 @@ function sendPosts(){
 	//I dont understand the formatting of how the content will be shown and how the video/images will be rendered
 	for(i = 0; i<list.length;i++)
 	{
-		innerhtmlforusername = list[i].un
+		innerhtmlforusername = list[i].un;
 		if(list[i].type.localeCompare("text")
-			innerhtmlfortext = list[i].content	
-		if(list[i].type.localeCompare("video")
-			innerhtmlforvideo = list[i].content	
-		if(list[i].type.localeCompare("picture")
-			innerhtmlforpicture = list[i].content		
+			innerhtmlfortext = list[i].content;
+		else if(list[i].type.localeCompare("video")
+			innerhtmlforvideo = list[i].content;
+		else(list[i].type.localeCompare("picture")
+			innerhtmlforpicture = list[i].content;		
 	}
 }

@@ -151,3 +151,4 @@ function test2(){
 		post_comments.innerHTML = post_comments.innerHTML +"<div id = \"usercomment\"><div class=\"card-group d-flex\"><div class=\"card flex-fill border-0\"><div class=\"card-body flex-row\"><div class=\"card-body\"><h5 class=\"card-title font-weight-bold mb-2\">"+un+"</h5><p class=\"card-text\">"+content+"</p><hr></div></div></div></div></div>"
 	}
 }*/
+

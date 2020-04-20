@@ -58,8 +58,8 @@
 
 
 
-			<div id="text" class="container tab-pane active">
-				<form action="/comment-sub?feed_id="+ method="post" enctype="multipart/form-data">
+			<div id="text" class="container tab-pane active" >
+				<form  id="feed_identity" method="post" enctype="multipart/form-data">
 					<fieldset>
 						<div class="create_feed">
 							<label for="feed_text_body">Type something in the following. . .</label>
@@ -71,6 +71,15 @@
 					</fieldset>
 				</form>
 			</div>
+
+			<script>
+				var fd_id = document.URL;
+				console.log(fd_id);
+				f_num = fd_id.split("=")[1];
+				console.log(f_num);
+				document.getElementById("feed_identity").action = "/comment-sub?feed_id="+f_num;
+				console.log("here~~~~~~~~~~");
+			</script>
 
 			<div id = "hi">Comments Here</div>
 			<!--

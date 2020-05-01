@@ -48,7 +48,7 @@ function checkFileType(file, cb){
 
 //was localhost before.
 var connection = mysql.createConnection({
-	host:'localhost',
+	host:'mysql',
 	user:'phpmyadmin',
 	password:'hello123',
 	database:'pet_diary',

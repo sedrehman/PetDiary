@@ -61,6 +61,40 @@ connection.connect(function(err) {
 	}
 
 	console.log('Connected to the MySQL server.');
+
+	// ~~~~~~~~Create tables if they dont exists ..~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	connection.query("CREATE TABLE if not exists users( id int(10) unsigned primary key auto_increment,\
+		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null, \
+		bio varchar(255), requests TEXT, friends TEXT );", function(error, result, fields){
+			if(error){
+				console.error('could not make user table ' + error.message);
+			}
+	});
+	connection.query("CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment, \
+		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null, \
+		creation_time datatime DEFAULT CURRENT_TIMESTAMP not null);", function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+
+	connection.query("CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment, \
+		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null, \
+		name varchar(255) not null, creation_time datatime DEFAULT CURRENT_TIMESTAMP not null, \
+		likes int(10) unsigned not null );", function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+	
+	connection.query("CREATE TABLE if not exists lastSave ( file_name int(10) unsigned not null, id int(10) unsigned not null ) ;", 
+		function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	connection.query("SELECT `file_name` FROM lastSave where id=0", function(error, results, fields) {
 		// console.log(results);
 		// console.log("##################################################");

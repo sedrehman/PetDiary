@@ -134,7 +134,80 @@ h1
 	/* margin-top: 2%; */
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~~ end of create feed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .verticalLine {
   border-left: thin solid #696969;
+}
+
+/* Chat */
+.textContainer
+{
+	top:20%;
+	right: 1%;
+	width:80%;
+	height:60%;
+	position:fixed;
+	background-color: white;
+	border-color: black;
+	overflow-y: scroll;
+}
+
+#myForm
+{
+	top:81%;
+	right: 0%;
+	width:80%;
+	position:fixed
+}
+
+#message{
+	width:80%;
+}
+
+#dtime{
+	padding-left:5%;
+}
+
+#text
+{
+	border-radius: 25px;
+    border-width: 2px;
+	box-sizing: border-box;
+    display:inline-block;
+	padding-left:1%;
+	width:95%;
+	background-color: blue;
+	color:white;
+}
+#huh
+{
+	padding-top:1%;
+	padding-left:1%;
+}
+
+#friendContainer{
+	top:20%;
+	left: 1%;
+	width:15%;
+	height:60%;
+	position:fixed;
+	background-color: white;
+	border-color: black;
+	overflow-y: scroll;
+}
+
+#ha
+{
+	color:white;
+	padding-top:5%;
+	padding-left:1%;
+}
+#friend{
+	border-radius: 25px;
+    border-width: 2px;
+	background-color: blue;
+	box-sizing: border-box;
+    display:inline-block;
+	padding-left:1%;
+	width:99%;
+	text-align:center;
 }

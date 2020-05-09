@@ -46,9 +46,9 @@ function checkFileType(file, cb){
 }
 
 
-
+//was localhost before.
 var connection = mysql.createConnection({
-	host:'localhost',
+	host:'mysql',
 	user:'phpmyadmin',
 	password:'hello123',
 	database:'pet_diary',
@@ -61,6 +61,40 @@ connection.connect(function(err) {
 	}
 
 	console.log('Connected to the MySQL server.');
+
+	// ~~~~~~~~Create tables if they dont exists ..~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	connection.query("CREATE TABLE if not exists users( id int(10) unsigned primary key auto_increment,\
+		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null, \
+		bio varchar(255), requests TEXT, friends TEXT );", function(error, result, fields){
+			if(error){
+				console.error('could not make user table ' + error.message);
+			}
+	});
+	connection.query("CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment, \
+		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null, \
+		creation_time datatime DEFAULT CURRENT_TIMESTAMP not null);", function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+
+	connection.query("CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment, \
+		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null, \
+		name varchar(255) not null, creation_time datatime DEFAULT CURRENT_TIMESTAMP not null, \
+		likes int(10) unsigned not null );", function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+	
+	connection.query("CREATE TABLE if not exists lastSave ( file_name int(10) unsigned not null, id int(10) unsigned not null ) ;", 
+		function(error, result, fields){
+			if(error){
+				console.error('could not make comments table ' + error.message);
+			}
+	});
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	connection.query("SELECT `file_name` FROM lastSave where id=0", function(error, results, fields) {
 		// console.log(results);
 		// console.log("##################################################");
@@ -127,6 +161,7 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 }) ;
 
 app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
+	console.log("here "+ req.query);
 	if(sess == undefined){
 		res.sendFile(__dirname + "/website/login.html");
 		res.end();
@@ -134,15 +169,16 @@ app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res)
 	}
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
+
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 	
-	// var queryString = window.location.search;
-	// let queryString = anyString.substring(anyString.length - 1)
-	
-	connection.query("INSERT INTO comments ( comment_id, `feed_id`, `username`, `comment`, `creation_time`) VALUES (?,?,?,?,?)", [id,queryString,sess.user_id, sess.username, feed_body,time], function(err, result){
+	connection.query("INSERT INTO comments ( `feed_id`, `username`, `comment`) VALUES (?,?,?)", [feedID, sess.username, feed_body], function(err, result){
         if(err){
 			throw err;
 		}else{
 			console.log("record innserted into comment");
+			res.redirect('./item.html?feed_id='+feedID);
 		}
     });
 
@@ -273,8 +309,6 @@ app.get('/get_feed', function(req, response){
 			response.send('errrrroor!!!');
 		}
 		else if (results.length > 0) {
-
-			console.log("logged in! ");
 			response.send(results);
 
 		}
@@ -308,6 +342,11 @@ app.get('/get_single_feed', function(req, response){
 
 
 app.get('/get_comments', function(req, response){
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
 	
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
@@ -327,8 +366,36 @@ app.get('/get_comments', function(req, response){
 	});
 });
 
+app.post('/set_likes', function(req, response){
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	
+	var feedID = req.query.feed_id;
+	var numOfLikes =  req.query.likes;
+	var likes = parseInt(numOfLikes) + 1;
+
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+	console.log("~~~~~~~~~~~~~~num of likes:"+likes);
+
+	connection.query("UPDATE feed SET `likes`=? WHERE `feed_id`=?",[likes, feedID], function(error, results, fields) {
+		
+		if(error){
+			console.log("error");
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("likes set");
+		}
+		response.end();
+	});
+});
+
 app.use(function (req, res, next) {
-	console.log(req.originalUrl);
+	console.log("404---->" +req.originalUrl);
     res.status(404).send("404'ed")
 });
 

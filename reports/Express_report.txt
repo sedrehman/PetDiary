@@ -9,7 +9,70 @@ Express.js is a web application framework. It’s built on top of Node.js which 
 
 
 What does Express.js accomplish in PetDiary
-It builds the sockets for us and handles HTTP functions such as GET. It handles the server-side GET requests in a simple manner. All you have to do is set a path to a specific request in a single line of code. It then reads that set path and sends the file requested. It can be images, CSS, HTML or whatever you wish to send. Its reduces the workload you would have to go through to create a server manually. No more byte parsing or string parsing. Thus far we only used it to handle GET requests. Later we will also implement POST and AJAX.
+It builds the sockets for us and handles HTTP functions such as GET and POST. It handles the server-side GET requests in a simple manner. All you have to do is set a path to a specific request in a single line of code. It then reads that set path and sends the file requested. It can be images, CSS, HTML or whatever you wish to send. Its reduces the workload you would have to go through to create a server manually. No more byte parsing or string parsing.
+
+We create it in the code
+const app = express();
+After that we set it up with a port and then use it in the code
+app.use(express.static('website'));
+app.listen(port, function () {
+        console.log('Example app listening on port' + port + '!');
+});
+
+We use it for get functions in our code in sections usch as
+app.get('/', function (req, res) {
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		
+	}else{
+		res.sendFile(__dirname + "/website/signUp.html");
+	}
+});
+Where we get the log in or signup page depending on the situation.
+Another example would be
+app.get('/get_comments', function(req, response){
+	
+	var feedID = req.query.feed_id;
+	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
+
+	connection.query("SELECT * FROM comments where `feed_id`= ?",[feedID], function(error, results, fields) {
+		
+		if(error){
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("sending comments");
+			response.send(results);
+
+		}
+		response.end();
+	});
+});
+Where we use it to get the comments.
+
+We also use post methods with express for example here
+app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	//console.log(feed_body);
+	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "text", feed_body], function(err, result){
+        if(err){
+			throw err;
+		}else{
+			console.log("record innserted into file-image");
+			res.redirect('./home.html');
+		}
+    });
+
+}) ;
+Where we use it to get the acesss the data and store it into our database
+
 
 
 Licensing

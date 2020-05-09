@@ -135,3 +135,6 @@ h1
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~ end of create feed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.verticalLine {
+  border-left: thin solid #696969;
+}

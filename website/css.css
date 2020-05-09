@@ -1,0 +1,23 @@
+.textContainer
+{
+	top:20%;
+	right: 1%;
+	width:80%;
+	height:60%;
+	position:fixed;
+	background-color: white;
+	border-style: solid;
+	border-color: black;
+}
+
+#myForm
+{
+	top:81%;
+	right: 0%;
+	width:80%;
+	position:fixed;
+}
+
+#message{
+	width:80%;
+}

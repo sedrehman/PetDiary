@@ -65,23 +65,23 @@ connection.connect(function(err) {
 
 	// ~~~~~~~~Create tables if they dont exists ..~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	connection.query(`CREATE TABLE if not exists users( id int(10) unsigned primary key auto_increment,
-		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null, 
+		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null,
 		bio varchar(255), requests TEXT, friends TEXT );`, function(error, result, fields){
 			if(error){
 				console.error('could not make user table ' + error.message);
 			}
 	});
-	connection.query(`CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment, 
-		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null, 
+	connection.query(`CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment,
+		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null,
 		creation_time datetime DEFAULT CURRENT_TIMESTAMP not null);`, function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
 			}
 	});
 
-	connection.query(`CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment, 
-		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null, 
-		name varchar(255) not null, creation_time datetime DEFAULT CURRENT_TIMESTAMP not null, 
+	connection.query(`CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment,
+		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null,
+		name varchar(255) not null, creation_time datetime DEFAULT CURRENT_TIMESTAMP not null,
 		likes int(10) unsigned not null );`, function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
@@ -163,32 +163,12 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
-	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", 
+	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)",
 	[sess.user_id, sess.username, "text", feed_body], function(err, result){
         if(err){
 			throw err;
 		}else{
 			console.log("record innserted into file-image");
-			res.redirect('./home.html');
-		}
-    });
-
-}) ;
-
-app.post('/display-name', textUpload.single("feed_text_body") ,function(req, res) {
-	if(sess == undefined){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
-	var feed_body = req.body["feed_text_body"];
-	feed_body = removeBadChars(feed_body);
-	//console.log(feed_body);
-	connection.query("UPDATE users SET username = `username`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
-        if(err){
-			throw err;
-		}else{
-			console.log("record inserted into display-name");
 			res.redirect('./home.html');
 		}
     });
@@ -204,7 +184,7 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
-	connection.query("UPDATE users SET bio = `bio`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
+	connection.query("UPDATE users SET bio = `bio`=? where `id`=?",[feed_body, sess.user_id], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -232,7 +212,7 @@ app.post('/profile-image', function(req, res) {
 				console.log("##########################");
 				console.log(req.file.filename);
 				console.log("##########################");
-				connection.query("UPDATE users SET profile_image = `description`=? where `user_id`=?",["images/"+req.file.filename, sess.user_id], function(err, result){
+				connection.query("UPDATE users SET profile_image = `description`=? where `id`=?",["images/"+req.file.filename, sess.user_id], function(err, result){
 				    if(err){
 						throw err;
 					}else{
@@ -352,7 +332,7 @@ function removeBadChars(bad){
 
 
 app.post('/signup_form' , function(request, response){
-	
+
 	var name = request.body["name"];
 	var email = request.body["email"];
 	var pass = request.body["pass"];
@@ -374,7 +354,7 @@ app.post('/signup_form' , function(request, response){
 						console.log(err.message);
 					}
 				});
-				req_path		
+				req_path
 				response.redirect('./login.html');
 			}else{
 				err_mid = "Please Enter a valid name";
@@ -396,11 +376,11 @@ app.post('/signup_form' , function(request, response){
 			<head>
 			<title>
 			</title>
-			<link rel = "stylesheet" type = "text/css" href = "style.css" /> 
-			<style> 
-			</style> 
-			<script src="script.js"> 
-			</script> 
+			<link rel = "stylesheet" type = "text/css" href = "style.css" />
+			<style>
+			</style>
+			<script src="script.js">
+			</script>
 			</head>
 			<body class ="centered">
 			<img src="../images/bunham.jpg" id="bunham">
@@ -428,7 +408,7 @@ app.post('/signup_form' , function(request, response){
 
 		response.send(body_signup1 + mid_msg + body_signup2);
 	}
-	
+
 });
 
 
@@ -562,6 +542,70 @@ app.post('/set_likes', function(req, response){
 		else if (results.length > 0) {
 
 			console.log("likes set");
+		}
+		response.end();
+	});
+});
+
+app.post('/reject_request', function(req, response){
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+
+	var receiver_id = req.sess.user_id;
+	var sender_id = req.sess.sender_id;
+
+	var receiver_friends = 'SELECT friends FROM users WHERE id = ';
+
+	var receiver_friends = ;
+	var receiver_requests = ;
+	var sender_friends = ;
+
+	receiver_requests = receiver_requests + ;
+	sender_friends = sender_friends + ;
+	receiver_friends = receiver_friends + ,
+
+		connection.query("SELECT users FROM `friends`=? WHERE `feed_id`=?",[likes, feedID], function(error, results, fields) {
+
+		if(error){
+			console.log("error");
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("likes set");
+			res.redirect('./home.html');
+		}
+		response.end();
+	});
+});
+
+app.post('/accept_request', function(req, response){
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+
+	var receiver_id = req.sess.user_id;
+
+	var sender_id = req.sess.sender_id;
+	var requests =
+
+	friends_rec = friends_rec + ;
+
+	connection.query("SSELECT users SET `friends`=? WHERE `id`=?",[likes, feedID], function(error, results, fields) {
+
+		if(error){
+			console.log("error");
+			response.send('errrrroor!!!');
+		}
+		else if (results.length > 0) {
+
+			console.log("likes set");
+			res.redirect('./home.html');
 		}
 		response.end();
 	});

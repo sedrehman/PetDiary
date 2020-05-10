@@ -6,7 +6,7 @@ express-session allows you to create session middleware in express.
 
 
 What does express-session accomplish in PetDiary
-Expression session allows us to create sessions in PetDiary whereby we store user data in cookie keeping track of hat access they are allowed on the website. This is done by creating cookies (https://github.com/expressjs/session/blob/master/session/cookie.js) where it formats what information cookies take. Then (https://github.com/expressjs/session/blob/master/session/session.js) keeps track of the session  how long it has been and the ID, this is done by taking a request with the information supplied, it will then create a session for that user with an unique ID.
+Expression session allows us to create sessions in PetDiary whereby we store user data in cookie keeping track of hat access they are allowed on the website. This is done by creating cookies (https://github.com/expressjs/session/blob/master/session/cookie.js) where it formats what information cookies take. Then (https://github.com/expressjs/session/blob/master/session/session.js) keeps track of the session  how long it has been and the ID, this is done by taking a request with the information supplied, it will then create a session for that user with an unique ID. The session cookie will then be stored on server end to keep track if user is authenticated. 
 
 -> Where we use it:
 -> We tell express to use session here

@@ -42,31 +42,15 @@
     <div class="container">
         <ul class="nav nav-tabs nav-fill">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#text">Username</a>
+                <a class="nav-link" data-toggle="tab" href="#description">Description</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#image">Description</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#video">ProfileImage</a>
+                <a class="nav-link" data-toggle="tab" href="#image">ProfileImage</a>
             </li>
         </ul>
     </div>
         <div class="tab-content">
-            <div id="text" class="container tab-pane active">
-                <form action="/display-name" method="post" enctype="multipart/form-data">
-                	<fieldset>
-                		<div class="create_feed">
-                			<label for="exampleFormControlTextarea6">Type something in the following. . .</label>
-                			<textarea name="feed_text_body" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
-                		</div>
-                        <div class="form__submit-button">
-                          <input type="submit" name="text-submit">
-                        </div>
-                	</fieldset>
-                </form>
-            </div>
-            <div id="text" class="container tab-pane active">
+            <div id="description" class="container tab-pane active">
                 <form action="/description" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="create_feed">

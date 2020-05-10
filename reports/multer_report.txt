@@ -10,6 +10,7 @@ multer is used to allow us to upload images for a post but it is also used for t
 -> how it works: multer add a body and file/files object to a given request with body containg text and file/files containg files. (https://github.com/expressjs/multer/blob/master/lib/make-middleware.js) checks and incoming request if the request is a multipart/form then multer parses the request into body and file/files for the repective data types.
 
 -> where we use it:
+-> we create a way to redirct a saved file to its images directory
 const storage = multer.diskStorage({
 	destination: './website/images/',
 	filename: function(req, file, callback){

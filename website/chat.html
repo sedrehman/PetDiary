@@ -15,7 +15,7 @@
 		</script>
 	</head>
 		
-	<body>
+	<body onload = "initialize()">
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
 			<div class="container-fluid" style="min-height: 42px;">
 				<ul class="navbar-nav align-items-left">
@@ -60,24 +60,7 @@
 		</div>
 		
 		<div id = "friendContainer">
-		
-			<div id = "ha" onclick = "loadNewMessages()">
-				<div id = "friend">
-					Person
-				</div>
-			</div>
-			
-			<div id = "ha" onclick = "loadNewMessages()">
-				<div id = "friend">
-					Person 2
-				</div>
-			</div>
-			
-			<div id = "ha" onclick = "loadNewMessages()">
-				<div id = "friend">
-					Person 3
-				</div>
-			</div>
+		<div id = "ha" onclick = "loadNewMessages()"><div id = "friend">Person</div></div>
 		</div>
 		
 		<div>
@@ -86,5 +69,6 @@
 			 <input id="message" type="text" name="mess">	
 			 <button onclick ="sendMessage()"> Send </button>
 		</form>
+		</div>
 	</body>
 </html>

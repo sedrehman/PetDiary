@@ -11,7 +11,7 @@ function initialize(){
 	
 	//parseFriends(friends);
 
-	createFriends();
+	//createFriends();
 }
 
 function person(name, id) {
@@ -50,6 +50,7 @@ function getFriends(){
 	request.onreadystatechange = function(){	
 		if(this.readyState === 4 && this.status === 200){	
 			parseFriends(this.response);
+			createFriends();
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -57,10 +58,12 @@ function getFriends(){
 }
 
 function createFriends(){
-	console.log(friends);
+	//console.log(friends);
+	//console.log(friends.length);
+	console.log("#############################################");
 	console.log(friends.length);
 	box = document.getElementById("friendContainer");
-	for(var i =0; i < friends.length; i++){
+	for(var i = 0; i < friends.length; i++){
 		console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		b = document.createElement('span');
 		b.innerHTML = "<div id = \"ha\" onclick = \"loadNewMessages('"+friends[i].id+"')\"><div id = \"friend\">"+friends[i].name+"</div></div>";
@@ -84,6 +87,7 @@ function parseFriends(sup){
 	var one = sup.split("#######");
 	for(var i =0;i<one.length;i++)
 	{
+		console.log(i + "~~~");
 		var hi = one[i].split("@@@");
 		friends.push(new person(hi[0],hi[1]));
 	}

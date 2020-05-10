@@ -513,11 +513,6 @@ app.get('/get_single_feed', function(req, response){
 
 
 app.get('/get_comments', function(req, response){
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
 
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
@@ -538,12 +533,7 @@ app.get('/get_comments', function(req, response){
 });
 
 app.post('/set_likes', function(req, response){
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
-
+	
 	var feedID = req.query.feed_id;
 	var numOfLikes =  req.query.likes;
 	var likes = parseInt(numOfLikes) + 1;
@@ -595,6 +585,24 @@ app.get('/get_friends', function(req, res, err){
 		
 	})
 	//res.send(req.session.)
+});
+
+///get_msg?to=2&from=1
+app.get('/get_msg', function(req, response, err){
+	//to_id	to_name	from_id	from_name	msg
+	var to = req.query.to;
+	var from = req.query.from;
+
+	connection.query("SELECT * FROM messages where `to_id`= ? AND `from_id`=? ",[to, from], function(error, results, fields) {
+		if(error){
+			console.log(error.message);
+		}
+		else if (results.length > 0) {
+			console.log("sending msg");
+			response.send(results);
+		}
+		response.end();
+	});
 });
 
 

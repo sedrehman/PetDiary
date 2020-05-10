@@ -1,3 +1,8 @@
+function initialize(){
+    getSQLRequest();
+}
+
+
 function request(sender_username, sender_id) {
 	this.sender_username = sender_username
     this.sender_id = sender_id

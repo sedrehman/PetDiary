@@ -86,8 +86,8 @@ connection.connect(function(err) {
 				console.error('could not make comments table ' + error.message);
 			}
 	});
-	
-	connection.query("CREATE TABLE if not exists lastSave ( file_name int(10) unsigned not null, id int(10) unsigned not null ) ;", 
+
+	connection.query("CREATE TABLE if not exists lastSave ( file_name int(10) unsigned not null, id int(10) unsigned not null ) ;",
 		function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
@@ -133,7 +133,7 @@ app.use(express.static('website'));
 app.get('/', function (req, res) {
 	if(sess == undefined){
 		res.sendFile(__dirname + "/website/login.html");
-		
+
 	}else{
 		res.sendFile(__dirname + "/website/signUp.html");
 	}
@@ -160,6 +160,82 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 }) ;
 
+app.post('/display-name', textUpload.single("feed_text_body") ,function(req, res) {
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	//console.log(feed_body);
+	connection.query("UPDATE users SET username = `username`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
+        if(err){
+			throw err;
+		}else{
+			console.log("record inserted into display-name");
+			res.redirect('./home.html');
+		}
+    });
+
+}) ;
+
+app.post('/description', textUpload.single("feed_text_body") ,function(req, res) {
+	if(sess == undefined){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	//console.log(feed_body);
+	connection.query("UPDATE users SET username = `description`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
+        if(err){
+			throw err;
+		}else{
+			console.log("record inserted into description");
+			res.redirect('./home.html');
+		}
+    });
+
+}) ;
+
+app.post('/image_submit', function(req, res) {
+	if(!sess.user_id){
+		res.sendFile(__dirname + "/website/login.html");
+		res.end();
+		return;
+	}
+	upload(req, res, (err) => {
+		if(err){
+			console.log("~~~errrrrrroooooorrrrr~~~");
+			console.log(err);
+		}else {
+			if(req.file == undefined){
+				console.log("undefined1234567890");
+			} else {
+				console.log("##########################");
+				console.log(req.file.filename);
+				console.log("##########################");
+				connection.query("UPDATE users SET profile_image = `description`=? where `user_id`=?",["images/"+req.file.filename, sess.user_id], function(err, result){
+				    if(err){
+						throw err;
+					}else{
+						connection.query("UPDATE lastSave  SET `file_name`=? where id=0", [file_name] , function(err, result){
+							if(err){
+								console.log("issue with file name");
+							}
+						});
+						console.log("record innserted into image_submit");
+						res.redirect('./home.html');
+					}
+				});
+			}
+		}
+	});
+
+});
+
 app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
 	console.log("here "+ req.query);
 	if(sess == undefined){
@@ -172,7 +248,7 @@ app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res)
 
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
-	
+
 	connection.query("INSERT INTO comments ( `feed_id`, `username`, `comment`) VALUES (?,?,?)", [feedID, sess.username, feed_body], function(err, result){
         if(err){
 			throw err;
@@ -347,12 +423,12 @@ app.get('/get_comments', function(req, response){
 		res.end();
 		return;
 	}
-	
+
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
 	connection.query("SELECT * FROM comments where `feed_id`= ?",[feedID], function(error, results, fields) {
-		
+
 		if(error){
 			response.send('errrrroor!!!');
 		}
@@ -372,7 +448,7 @@ app.post('/set_likes', function(req, response){
 		res.end();
 		return;
 	}
-	
+
 	var feedID = req.query.feed_id;
 	var numOfLikes =  req.query.likes;
 	var likes = parseInt(numOfLikes) + 1;
@@ -381,7 +457,7 @@ app.post('/set_likes', function(req, response){
 	console.log("~~~~~~~~~~~~~~num of likes:"+likes);
 
 	connection.query("UPDATE feed SET `likes`=? WHERE `feed_id`=?",[likes, feedID], function(error, results, fields) {
-		
+
 		if(error){
 			console.log("error");
 			response.send('errrrroor!!!');

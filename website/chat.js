@@ -1,3 +1,5 @@
+//sed######2
+
 var friends = []
 var messages 
 var currentFriend
@@ -6,8 +8,10 @@ var user
 function initialize(){
 	getUser()
 	getFriends();
+	
+	//parseFriends(friends);
+
 	createFriends();
-	parseFriends();
 }
 
 function person(name, id) {
@@ -19,7 +23,7 @@ function getMessages(friend){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
-			friends = JSON.parse(this.response);
+			messages = this.response;
 		}	
 	};
 	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	
@@ -27,10 +31,13 @@ function getMessages(friend){
 }
 
 function getUser(){
+
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
-			bob = JSON.parse(this.response).split("######");
+			//console.log(JSON.parse(this.response));
+			console.log(this.response);
+			bob = this.response.split("######");
 			user = new person(bob[0],bob[1])
 		}	
 	};
@@ -42,7 +49,7 @@ function getFriends(){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if(this.readyState === 4 && this.status === 200){	
-			parseFriends(JSON.parse(this.response));
+			parseFriends(this.response);
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -50,9 +57,11 @@ function getFriends(){
 }
 
 function createFriends(){
+	console.log(friends);
+	console.log(friends.length);
 	box = document.getElementById("friendContainer");
-	for(i =0;i<friends.length;i++)
-	{
+	for(var i =0; i < friends.length; i++){
+		console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		b = document.createElement('span');
 		b.innerHTML = "<div id = \"ha\" onclick = \"loadNewMessages('"+friends[i].id+"')\"><div id = \"friend\">"+friends[i].name+"</div></div>";
 		box.appendChild(b);
@@ -72,14 +81,14 @@ function loadNewMessages(newC){
 }
 
 function parseFriends(sup){
-	one = sup.split("#######");
-	for(i =0;i<one.length;i++)
+	var one = sup.split("#######");
+	for(var i =0;i<one.length;i++)
 	{
-		hi = one[i].split("@@@");
+		var hi = one[i].split("@@@");
 		friends.push(new person(hi[0],hi[1]));
 	}
 	currentFriend = friends[0];
-	getMessages(currentFriend);
+	//getMessages(currentFriend);
 }
 
 function createText(){

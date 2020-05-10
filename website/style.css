@@ -134,7 +134,9 @@ h1
 	/* margin-top: 2%; */
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~~ end of create feed ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+.verticalLine {
+  border-left: thin solid #696969;
+}
 
 /* Chat */
 .textContainer
@@ -166,7 +168,7 @@ h1
 }
 
 #text
-{   
+{
 	border-radius: 25px;
     border-width: 2px;
 	box-sizing: border-box;

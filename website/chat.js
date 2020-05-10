@@ -22,7 +22,7 @@ function getMessages(friend){
 			friends = JSON.parse(this.response);
 		}	
 	};
-	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"" + feedid, true);	
+	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	
 	request.send();
 }
 
@@ -34,7 +34,7 @@ function getUser(){
 			user = new person(bob[0],bob[1])
 		}	
 	};
-	request.open("GET", "/get_person" + feedid, true);	
+	request.open("GET", "/get_person", true);	
 	request.send();
 }
 
@@ -72,7 +72,7 @@ function loadNewMessages(newC){
 }
 
 function parseFriends(sup){
-	one = str.split("#######");
+	one = sup.split("#######");
 	for(i =0;i<one.length;i++)
 	{
 		hi = one[i].split("@@@");
@@ -105,7 +105,7 @@ function sendMessage() {
 		}
 	}
 	request.open("POST", "WebServer.py");
-	request.send("/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui+");
+	request.send("/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
 	talk.focus();
 	createText();
 	return false;

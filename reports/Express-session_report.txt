@@ -8,6 +8,39 @@ express-session allows you to create session middleware in express.
 What does express-session accomplish in PetDiary
 Expression session allows us to create sessions in PetDiary whereby we store user data in cookie keeping track of hat access they are allowed on the website. This is done by creating cookies (https://github.com/expressjs/session/blob/master/session/cookie.js) where it formats what information cookies take. Then (https://github.com/expressjs/session/blob/master/session/session.js) keeps track of the session  how long it has been and the ID, this is done by taking a request with the information supplied, it will then create a session for that user with an unique ID.
 
+-> Where we use it:
+-> We tell express to use session here
+app.use(session({
+	secret: 'cse312',
+	saveUninitialized: true,
+	resave: true
+}));
+var sess;
+
+-> Here is login is succesful we store the user data into a session
+if (username && password) {
+    sess = request.session;
+
+    connection.query("SELECT * from users WHERE email=? AND password=?",[username, password], function(error, results, fields) {
+        console.log(results);
+        // console.log(results.length);
+        // console.log(results[0].length);
+        // console.log(results[0]);
+        if(error){
+            response.send('Incorrect Username and/or Password!');
+        }
+        else if (results.length > 0) {
+
+            sess.user_id = results[0]['id'];
+            sess.username = results[0]['name'];
+            // console.log(results[0]['id']);
+            console.log("logged in! ");
+            response.redirect('./home.html');
+
+        }
+        response.end();
+    });
+
 Licensing
 express-session is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.
 

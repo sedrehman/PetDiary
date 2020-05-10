@@ -31,7 +31,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="messages.html">Messages</a>
 					</li>
-					<a class="nav-link bg-danger rounded-circle text-white mh-50">5</a>
+					<a class="nav-link bg-danger  text-white mh-50">5</a>
 					<div class="verticalLine"></div>
 					<li class="nav-item">
 						<a class="nav-link" href="profile.html">Profile</a>
@@ -44,44 +44,30 @@
 				</ul>
 			</div>
 		</nav>
-		<%
-for i=1 to Request.QueryString("feed_id").Count
-  Response.Write(Request.QueryString("feed_id")(i) & "<br>")
-next
-%>
+		<br>
 
-		<div id = "hey">
-		</div>
-		<!--<div class="container">
-			<div class="row col-12">
-				<div class="card-group">
-                    <div class="card col-12">
-						<div class="card-body d-flex flex-row">
-					     <img src="Profile_placeholder.png" class="rounded-circle mr-3" height="70px" width="70px" alt="avatar">
-					     <div>
-					  	 <h4 class="card-title font-weight-bold mb-2"><a href = "profile2.html">{{feed.user_name}}</a></h4>
-					     </div>
-					    </div>
-						<hr>
-                        <div class="card-body">
-                            <p class="card-text">text</p>
-						</div>
+		<div class="container">
+			<div id = "reqs"> Requests Displayed </div>
+
+
+				<!---<div class="card-group">
+					<div class="card col-12">
 						<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						  <label class="btn btn-link	 col-9">
-							<a href="item.html" class="btn form-control btn-dark">View Post</a>
+						<div class = "col-4 centered">
+						  <h3>Person Human</h3>
+					  	</div>
+						  <label class="btn btn-link col-4">
+							<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Accept</i> </button>
 						  </label>
-						  <label class="btn btn-link col-2">
-							<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Like</i> </button>
+						  <label class="btn btn-link col-4">
+							<button class="btn btn-block btn-danger"><i class="fa fa-thumbs-up">Reject</i> </button>
 						  </label>
-						  <label class="btn btn-link col-1">
-						    <input type="" class="form-control" id="likes" placeholder="0">
-						</label>
 						</div>
-                    </div>
-            	</div>
-			</div>
-		</div>!-->
+					</div>
+				</div>
+			</div> --->
+		</div>
 
-	</body>
+    </body>
 	<script src="script.js"></script>
 </html>

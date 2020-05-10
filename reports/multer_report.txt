@@ -2,11 +2,33 @@ multer
 
 
 What is multer
-multer is node.js middleware that handles file uploads of type multipart/form/data
+multer is node.js middleware that handles file uploads of type multipart/form/data, its an extension of Express so connection side is explained in Express report.
 
 
 What does express-session accomplish in PetDiary
 multer is used to allow us to upload images for a post but it is also used for the text posts. This is done by multer (https://github.com/expressjs/multer/blob/master/index.js), multer is primarily used for image upload as it allows us for the ability to store in a given location, due to the database holding a link to the location of the image and not the actual image.
+-> how it works: multer add a body and file/files object to a given request with body containg text and file/files containg files. (https://github.com/expressjs/multer/blob/master/lib/make-middleware.js) checks and incoming request if the request is a multipart/form then multer parses the request into body and file/files for the repective data types.
+
+-> where we use it:
+-> we create a way to redirct a saved file to its images directory
+const storage = multer.diskStorage({
+	destination: './website/images/',
+	filename: function(req, file, callback){
+		var fl_nm = file_name.toString() + path.extname(file.originalname);
+		//callback(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+		file_name = file_name + 1;
+		callback(null, fl_nm);
+	}
+});
+
+var textUpload = multer();
+// Init Upload
+const upload = multer({
+	storage: storage,
+	fileFilter: function(req, file, cb){
+		checkFileType(file, cb);
+	}
+}).single('myImage');
 
 Licensing
 multer is under MIT license, so it’s free to use as long as we reference Bootstrap on the CSS and style links. This changes nothing for us but that now we had to add the integrity field in the Bootstrap links.

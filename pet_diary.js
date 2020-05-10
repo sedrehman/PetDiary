@@ -46,9 +46,10 @@ function checkFileType(file, cb){
 }
 
 
-//was localhost before.
+//host: localhost for normal testing
+//mysql for docker
 var connection = mysql.createConnection({
-	host:'mysql',
+	host:'localhost',
 	user:'phpmyadmin',
 	password:'hello123',
 	database:'pet_diary',
@@ -63,25 +64,25 @@ connection.connect(function(err) {
 	console.log('Connected to the MySQL server.');
 
 	// ~~~~~~~~Create tables if they dont exists ..~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	connection.query("CREATE TABLE if not exists users( id int(10) unsigned primary key auto_increment,\
-		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null, \
-		bio varchar(255), requests TEXT, friends TEXT );", function(error, result, fields){
+	connection.query(`CREATE TABLE if not exists users( id int(10) unsigned primary key auto_increment,
+		email varchar(255) not null, password varchar(255) not null, name varchar(255) not null, 
+		bio varchar(255), requests TEXT, friends TEXT );`, function(error, result, fields){
 			if(error){
 				console.error('could not make user table ' + error.message);
 			}
 	});
-	connection.query("CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment, \
-		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null, \
-		creation_time datatime DEFAULT CURRENT_TIMESTAMP not null);", function(error, result, fields){
+	connection.query(`CREATE TABLE if not exists comments(comment_id int(10) unsigned primary key auto_increment, 
+		feed_id int(10) unsigned not null, username varchar(255) not null, comment varchar(255) not null, 
+		creation_time datetime DEFAULT CURRENT_TIMESTAMP not null);`, function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
 			}
 	});
 
-	connection.query("CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment, \
-		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null, \
-		name varchar(255) not null, creation_time datatime DEFAULT CURRENT_TIMESTAMP not null, \
-		likes int(10) unsigned not null );", function(error, result, fields){
+	connection.query(`CREATE TABLE if not exists feed ( feed_id int(10) unsigned primary key auto_increment, 
+		id int(10) unsigned not null, user_name varchar(255) not null, type varchar(255) not null, 
+		name varchar(255) not null, creation_time datetime DEFAULT CURRENT_TIMESTAMP not null, 
+		likes int(10) unsigned not null );`, function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
 			}
@@ -127,16 +128,29 @@ var sess;
 const port = 8000;
 
 
-app.use(express.static('website'));
 
 
-app.get('/', function (req, res) {
-	if(sess == undefined){
-		res.sendFile(__dirname + "/website/login.html");
-		
+//middleware . this is very important. ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+app.use(function (req, res, next) {
+	var req_path = req.path;
+	console.log(req_path);
+	if( req_path.includes("profile") || req_path.includes("home") || req_path.includes("item") || req_path.includes("edit") || req_path.includes("createFeed") ||
+	req_path.includes("messages")){
+		user_id = req.session.user_id;
+		token = req.session.token;
+		if(!user_id || !token){
+			res.redirect("./login.html");
+		}else{
+			next();
+		}
 	}else{
-		res.sendFile(__dirname + "/website/signUp.html");
+		next();
 	}
+});
+
+app.use(express.static('website'));
+app.get('/', function (req, res) {
+	res.sendFile(__dirname + "/website/login.html");
 });
 
 
@@ -149,7 +163,8 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
-	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "text", feed_body], function(err, result){
+	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", 
+	[sess.user_id, sess.username, "text", feed_body], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -227,6 +242,7 @@ app.post('/file-video', function(req, res) {
 	res.send("sorry this is too much to handle, next phase we will get this done");
 });
 
+
 function removeBadChars(bad){
 	bad = bad.replace('<', '');
 	bad = bad.replace('>', '');
@@ -259,7 +275,88 @@ function removeBadChars(bad){
 }
 
 
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`
+app.post('/signup_form' , function(request, response){
+	
+	var name = request.body["name"];
+	var email = request.body["email"];
+	var pass = request.body["pass"];
+
+	var flag = true;
+	var err_mid = "";
+
+	if(email.includes("@")){
+		connection.query("SELECT * from users WHERE email=?",[email], function(error, results, fields) {
+			if(results.length > 0){
+				flag = false;
+			}
+		});
+		if(flag != false && pass.length > 7){
+			if(name.length > 0){
+				connection.query("INSERT INTO users( email, password, name) VALUES(?,?,?)", [email, pass, name], function(err, results){
+					if(err){
+						console.log("~~~~~~~~~~~~~~failed to sign up ~~~~~~~~~~~~~");
+						console.log(err.message);
+					}
+				});
+				req_path		
+				response.redirect('./login.html');
+			}else{
+				err_mid = "Please Enter a valid name";
+				flag = false;
+			}
+		}else{
+			err_mid = "Please Enter a password 8 or more characters";
+			flag = false;
+		}
+	}else{
+		err_mid = "Please Enter a valid email";
+		flag = false;
+	}
+
+	if(flag == false) {
+		var body_signup1 =  `
+			<!DOCTYPE html>
+			<html>
+			<head>
+			<title>
+			</title>
+			<link rel = "stylesheet" type = "text/css" href = "style.css" /> 
+			<style> 
+			</style> 
+			<script src="script.js"> 
+			</script> 
+			</head>
+			<body class ="centered">
+			<img src="../images/bunham.jpg" id="bunham">
+			<img src="../images/turtleparrot.jpg" id="turtleparrot">
+			<div id = "signUpBox">
+			<form action="/signup_form" method="post">`;
+
+		var mid_msg = "<p>" + err_mid + "</p>";
+
+		var body_signup2 = `
+			<label id="msg_lbl"></label>
+			<label for="name">Name: </label><br/><br>
+			<input id="name" name = "name" type="text"><br/><br>
+			<label for="pass">Password: </label><br/><br>
+			<input id="pass" name = "pass" type="text"><br/><br>
+			<label for="email">Email: </label><br/><br>
+			<input id="email" name = "email" type="text"><br/><br>
+			<input type="submit" value="Sign Up">
+			<br><br>
+			<a href = "login.html">Already have an account? Log in here!</a>
+			</form>
+			</div>
+			</body>
+			</html> `;
+
+		response.send(body_signup1 + mid_msg + body_signup2);
+	}
+	
+});
+
+
+//~~~~~~~~~~~~~~~~~~~~~~~~log in form~~~~~~~~~~~~~~~~~~~~~`
 app.post('/auth', function(request, response) {
     var username = request.body["username"];
 	username = removeBadChars(username);
@@ -283,7 +380,7 @@ app.post('/auth', function(request, response) {
 			else if (results.length > 0) {
 
 				sess.user_id = results[0]['id'];
-				sess.username = results[0]['name'];
+				sess.token = results[0]['email'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');

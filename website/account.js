@@ -29,11 +29,10 @@ function getProfile(data){
 function sendRequest(data){
     post_body.innerHTML = "";
     list = getRequest(data);
-
-    for(i = 0; i < list.length, i++){
-
-        post_body.innerHTML =
-    }
+    var profileimage = list[0].profile_image;
+    var username = list[0].user_name;
+    var description = list[0].description;
+    post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
 }
 
 function getSQLProfile(){

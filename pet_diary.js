@@ -189,7 +189,7 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
-	connection.query("UPDATE users SET username = `description`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
+	connection.query("UPDATE users SET bio = `bio`=? where `user_id`=?",[feed_body, sess.user_id], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -200,7 +200,7 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
 
 }) ;
 
-app.post('/image_submit', function(req, res) {
+app.post('/profile-image', function(req, res) {
 	if(!sess.user_id){
 		res.sendFile(__dirname + "/website/login.html");
 		res.end();

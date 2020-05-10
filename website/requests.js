@@ -1,39 +1,45 @@
-function request(receiver_id,sender_id,sender_username) {
-	this.receiver_id = receiver_id
-	this.sender_id = sender_id
+function request(sender_username, sender_id) {
 	this.sender_username = sender_username
+    this.sender_id = sender_id
 }
 
 function getRequest(data){
-	var i;
 	var list = [];
-	var dictionary = data;
-    var req_string = dictionary[i].requests
+    var req_string = data
     var lst_str = 0;
-	for (cur_str = 0; cur_str < req_string.length; i++)
+	for (cur_str = 0; cur_str < req_string.length)
 	{
         if (req_string[i] == '#'){
-            if(str.substring(cur_str, lst_str) == "######"){
-                x = new request(dictionary[i].receiver_id, dictionary[i].sender_id, dictionary[i].sender_username);
+            if(req_string.substring(cur_str, cur_str + 5) == "######"){
+                var cur = cur_str + 6;
+                while(req_string[cur] != '@'){
+                    cur = cur + 1
+                }
+                x = new request(req_string.substring(lst_str,cur_str),req_string.substring(cur_str + 6,cur));
                 list.push(x);
-                lst_str = i + 6;
-                i = lst_str
+                lst_str = cur_str + 6;
+                cur_str = lst_str
             }
             else{
-                i = i + 1;
+                cur_str = cur_str + 1;
             }
         }
         else{
-            i = i + 1;
+            cur_str = cur_str + 1;
         }
 	}
 	return list;
 }
 
 function sendRequest(data){
+    post_body.innerHTML = "";
+    list = getRequest(data);
+    var usrname;
 
+    for(i = 0; i < list.length, i++){
 
-    post_body.innerHTML =
+        post_body.innerHTML = post_body.innerHTML + "<div class=\"card-group\"> <div class=\"card col-12\"> <div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\"><div class = \"col-4 centered\"><h3>"usrname"</h3></div><label class=\"btn btn-link col-4\"><button class=\"btn btn-block btn-success\"><i class=\"fa fa-thumbs-up\">Accept</i> </button></label><label class=\"btn btn-link col-4\"><button class=\"btn btn-block btn-danger\"><i class=\"fa fa-thumbs-up\">Reject</i> </button></label></div></div></div>"
+    }
 }
 
 function getSQLRequest(){
@@ -43,4 +49,9 @@ function getSQLRequest(){
 			sendRequest(JSON.parse(this.response));
 		}
 	};
+    var userid = document.URL;
+    var idx = userid.indexOf("user");
+    userid = ;
+    request.open("GET", "/get_requests?user=" + userid, true);
+    request.send();
 }

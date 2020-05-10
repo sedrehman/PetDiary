@@ -39,25 +39,59 @@
 			</ul>
 		</div>
     </nav>
-    <div>
-        <div class="create_feed">
-            <label for="exampleFormControlTextarea6">Type your Display Name here</label>
-            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="1" placeholder="Display Name"></textarea>
-        </div>
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span onclick="openFile()"class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-            </div>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                <label class="custom-file-label" for="inputGroupFile01">Profile Image</label>
-            </div>
-        </div>
-		<div class="create_feed">
-			<label for="exampleFormControlTextarea6">Type your Description Here</label>
-			<textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="5" placeholder="Description Here"></textarea>
-		</div>
+    <div class="container">
+        <ul class="nav nav-tabs nav-fill">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#text">Username</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#image">Description</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#video">ProfileImage</a>
+            </li>
+        </ul>
     </div>
+        <div class="tab-content">
+            <div id="text" class="container tab-pane active">
+                <form action="/display-name" method="post" enctype="multipart/form-data">
+                	<fieldset>
+                		<div class="create_feed">
+                			<label for="exampleFormControlTextarea6">Type something in the following. . .</label>
+                			<textarea name="feed_text_body" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+                		</div>
+                        <div class="form__submit-button">
+                          <input type="submit" name="text-submit">
+                        </div>
+                	</fieldset>
+                </form>
+            </div>
+            <div id="text" class="container tab-pane active">
+                <form action="/description" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="create_feed">
+                            <label for="exampleFormControlTextarea6">Type something in the following. . .</label>
+                            <textarea name="feed_text_body" class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+                        </div>
+                        <div class="form__submit-button">
+                          <input type="submit" name="text-submit">
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div id="image" class="container tab-pane">
+                <form action="/profile-image" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <input type="file" id="myFile" name="myImage">
+                                <input type="submit" name = "image_submit">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     <script src="script.js"></script>
 </body>
 </html>

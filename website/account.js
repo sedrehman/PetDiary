@@ -6,11 +6,12 @@ function openFile() {
     document.getElementById('attachment').click();
 }
 
-function profile(user_name, user_id, description, profile_image) {
+function profile(user_name, user_id, description, profile_image, pageuser_id) {
 	this.user_id = user_id
     this.user_name = user_name
     this.description = description
     this.profile_image = profile_image
+    this.pageuser_id = pageuser_id
 }
 
 function getProfile(data){
@@ -19,7 +20,7 @@ function getProfile(data){
 	var dictionary = data;
 	for (i = 0; i < dictionary.length; i++)
 	{
-		x = new post(dictionary[i].user_id, dictionary[i].user_name, dictionary[i].description, dictionary[i].profile_image);
+		x = new post(dictionary[i].user_id, dictionary[i].user_name, dictionary[i].description, dictionary[i].profile_image, dictionary[i].pageuser_id);
 		list.push(x)
 	}
 
@@ -32,8 +33,16 @@ function sendRequest(data){
     var profileimage = list[0].profile_image;
     var username = list[0].user_name;
     var description = list[0].description;
-    post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
+    var pageuser_id = list[0].pageuser_id;
+    var userid = list[0].user_if;
+    if(pageuser_id == userid){
+        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p><br><button>Follow</button></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
+    }
+    else{
+        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
+    }
 }
+
 
 function getSQLProfile(){
 	var request = new XMLHttpRequest();

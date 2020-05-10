@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 const express = require('express');
 var session = require('express-session');
-var exphbs = require('express-handlebars');
+// var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 const path = require('path');
@@ -113,8 +113,8 @@ connection.connect(function(err) {
 
 const app = express();
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
-app.set('view engine', 'handlebars');
+// app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+// app.set('view engine', 'handlebars');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -123,8 +123,6 @@ app.use(session({
 	saveUninitialized: true,
 	resave: true
 }));
-var sess;
-<<<<<<< HEAD<<<<<<< HEAD
 const port = 8000;
 
 
@@ -455,8 +453,8 @@ app.post('/auth', function(request, response) {
 			}
 			else if (results.length > 0) {
 
-				sess.user_id = results[0]['id'];
-				sess.token = results[0]['email'];
+				request.session.user_id = results[0]['id'];
+				request.session.token = results[0]['email'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
@@ -566,6 +564,39 @@ app.post('/set_likes', function(req, response){
 		response.end();
 	});
 });
+
+
+app.get('/get_person', function(req, res, err){
+	//name ###### id
+	var user_id = req.session.user_id;
+	connection.query("SELECT * FROM users where id= ?",[user_id], function(error, results, fileds){
+		if(error){
+			console.log(error.message);
+		}else{
+			var name = results[0]['name'];
+			var id = results[0]['id'];
+			res.send(name+"######"+ id);
+		}
+		
+	})
+	//res.send(req.session.)
+});
+
+app.get('/get_friends', function(req, res, err){
+	//name ###### id
+	var user_id = req.session.user_id;
+	connection.query("SELECT * FROM users where id= ?",[user_id], function(error, results, fileds){
+		if(error){
+			console.log(error.message);
+		}else{
+			var friends = results[0]['friends'];
+			res.send(friends);
+		}
+		
+	})
+	//res.send(req.session.)
+});
+
 
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);

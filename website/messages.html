@@ -1,16 +1,22 @@
-
-
-
+<!DOCTYPE HTML>
+<!-- Johnny Guo -->
 <html>
-<head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="Messenger.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel = "stylesheet" type = "text/css" href = "style.css" />
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<body class = "behind">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
+	<head>
+		<title></title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel = "stylesheet" type = "text/css" href = "style.css" />
+		<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		<script src="chat.js"></script>
+		<style>
+		</style>
+		
+		<script>
+		</script>
+	</head>
+		
+	<body onload = "initialize()">
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
 			<div class="container-fluid" style="min-height: 42px;">
 				<ul class="navbar-nav align-items-left">
 				<a class="navbar-brand" href="home.html">PETDIARY</a>
@@ -22,7 +28,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="createFeed.html">Create</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href="home.html">Home</a>
 					</li>
 					<li class="nav-item">
@@ -39,169 +45,19 @@
 				</ul>
 			</div>
 		</nav>
-
-<div class="container">
-<h2 class=" text-center">Messenger</h2>
-<div class="messaging">
-      <div class="inbox_msg">
-        <div class="inbox_people">
-          <div class="headind_srch">
-            <div class="recent_heading">
-              <h4>Recent</h4>
-            </div>
-            <div class="srch_bar">
-              <div class="stylish-input-group">
-                <input type="text" class="search-bar"  placeholder="Search" >
-                <span class="input-group-addon">
-                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                </span> </div>
-            </div>
-          </div>
-          <div class="inbox_scroll">
-          <div class="inbox_chat">
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-         </div>
-         <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="inbox_chat">
-            <div class="chat_list">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-                <div class="chat_ib">
-                  <h5>Alex G <span class="chat_date">Dec 25</span></h5>
-                  <p>Test text</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
-        <div class="mesgs">
-          <div class="headind_srch">
-            <div class="recent_heading">
-              <h4><a href = "profile3.html">Alex G</a></h4>
-            </div>
-          </div>
-          <div class="msg_history">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test text</p>
-                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test text</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test text</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test text 2</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test text 3</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test text 4</p>
-                <span class="time_date"> 11:02 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://i7.pngguru.com/preview/764/495/719/computer-icons-user-profile-user.jpg" alt="Alex" style="border-radius: 50%;"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test text 5</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</body>
+		
+		<div class = "textContainer" id = "begginningText">
+		</div>
+		
+		<div id = "friendContainer">
+		</div>
+		
+		<div>
+		<form enctype="multipart/form-data" id="myForm" onsubmit = "return false">
+			 <label for="message">Message</label>
+			 <input id="message" type="text" name="mess">	
+			 <button onclick ="sendMessage()"> Send </button>
+		</form>
+		</div>
+	</body>
 </html>

@@ -42,6 +42,7 @@ function sendRequest(data){
     var usrname;
 
     for(i = 0; i < list.length, i++){
+        usrname = list0[i].sender_username;
 
         post_body.innerHTML = post_body.innerHTML + "<div class=\"card-group\"> <div class=\"card col-12\"> <div class=\"btn-group btn-group-toggle\" data-toggle=\"buttons\"><div class = \"col-4 centered\"><h3>"usrname"</h3></div><label class=\"btn btn-link col-4\"><button class=\"btn btn-block btn-success\"><i class=\"fa fa-thumbs-up\">Accept</i> </button></label><label class=\"btn btn-link col-4\"><button class=\"btn btn-block btn-danger\"><i class=\"fa fa-thumbs-up\">Reject</i> </button></label></div></div></div>"
     }

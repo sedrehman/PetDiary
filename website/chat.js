@@ -23,7 +23,8 @@ function getMessages(friend){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
-			messages = this.response;
+			messages = JSON.parse(this.response);
+			createText();
 		}	
 	};
 	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	
@@ -69,6 +70,7 @@ function createFriends(){
 		b.innerHTML = "<div id = \"ha\" onclick = \"loadNewMessages('"+friends[i].id+"')\"><div id = \"friend\">"+friends[i].name+"</div></div>";
 		box.appendChild(b);
 	}
+	getMessages(currentFriend);
 }
 
 function loadNewMessages(newC){
@@ -98,7 +100,8 @@ function parseFriends(sup){
 function createText(){
 	getMessages(currentFriend)
 	box = document.getElementById("begginningText");
-	b = document.createElement('span')
+	
+	b = document.createElement('span');
 	for(i =0;i<messages.length;i++)
 	{
 		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].msg+"</span><div id = \"textRecieve\">Message Example</div></div></div></div>"

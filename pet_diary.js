@@ -583,7 +583,7 @@ app.post('/accept_request', function(req, response){
 
 	//friends_rec = friends_rec + ;
 
-	connection.query("SSELECT users SET `friends`=? WHERE `id`=?",[likes, feedID], function(error, results, fields) {
+	connection.query("SELECT users SET `friends`=? WHERE `id`=?",[likes, feedID], function(error, results, fields) {
 
 		if(error){
 			console.log("error");
@@ -597,6 +597,7 @@ app.post('/accept_request', function(req, response){
 		response.end();
 	});
 });
+
 app.get('/get_person', function(req, res, err){
 	//name ###### id
 	var user_id = req.session.user_id;
@@ -627,7 +628,7 @@ app.get('/get_friends', function(req, res, err){
 	})
 	//res.send(req.session.)
 });
-<<<<<<< HEAD
+
 
 ///get_msg?to=2&from=1
 app.get('/get_msg', function(req, response, err){
@@ -635,7 +636,7 @@ app.get('/get_msg', function(req, response, err){
 	var to = req.query.to;
 	var from = req.query.from;
 
-	connection.query("SELECT * FROM messages where `to_id`= ? AND `from_id`=? ",[to, from], function(error, results, fields) {
+	connection.query("SELECT * FROM messages where (`to_id`= ? AND `from_id`=? ) OR ( `to_id`= ? AND `from_id`=? ) ",[to, from, from , to], function(error, results, fields) {
 		if(error){
 			console.log(error.message);
 		}
@@ -648,8 +649,6 @@ app.get('/get_msg', function(req, response, err){
 });
 
 
-=======
->>>>>>> 134da65267ad86ca155a0c000e8458085e0ebd82
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);
     res.status(404).send("404'ed")

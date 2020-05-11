@@ -8,10 +8,6 @@ var user
 function initialize(){
 	getUser()
 	getFriends();
-	
-	//parseFriends(friends);
-
-	//createFriends();
 }
 
 function person(name, id) {
@@ -98,10 +94,14 @@ function parseFriends(sup){
 }
 
 function createText(){
-	
 	box = document.getElementById("begginningText");
-	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
+//	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
 	b = document.createElement('span');
+	
+	while (box.firstChild) {
+		box.removeChild(box.lastChild);
+	}
+	
 	for(i =0;i<messages.length;i++)
 	{
 		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].msg+"</span><div id = \"textRecieve\">Message Example</div></div></div></div>"
@@ -120,7 +120,7 @@ function sendMessage() {
 		{
 		}
 	}
-	request.open("POST", "WebServer.py");
+	request.open("POST", "/send_message");
 	request.send("/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
 	talk.focus();
 	createText();

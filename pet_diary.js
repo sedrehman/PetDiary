@@ -625,6 +625,24 @@ app.get('/get_msg', function(req, response, err){
 	});
 });
 
+app.get('/send_message', function(req, response, err){
+	
+	//to_id	to_name	from_id	from_name	msg
+	var to = req.query.to;
+	var from = req.query.from;
+
+	connection.query("SELECT * FROM messages where (`to_id`= ? AND `from_id`=? ) OR ( `to_id`= ? AND `from_id`=? ) ",[to, from, from , to], function(error, results, fields) {
+		if(error){
+			console.log(error.message);
+		}
+		else if (results.length > 0) {
+			console.log("sending msg");
+			response.send(results);
+		}
+		response.end();
+	});
+});
+
 
 app.post('/description', textUpload.single("feed_text_body") ,function(req, res) {
 

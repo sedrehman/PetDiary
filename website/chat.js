@@ -71,6 +71,7 @@ function createFriends(){
 }
 
 function loadNewMessages(newC){
+	alert(newC);
 	for(i =0;i<friends.length;i++)
 	{
 		if(newC == friends[i].id)

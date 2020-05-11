@@ -163,11 +163,11 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 			throw err;
 		}else{
 			console.log("record innserted into file-image");
-			res.redirect('./home.html');
-		}
-    });
+			res.redirect('./home.html');"INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)"
+    	}
 
-}) ;
+	});
+});
 
 
 app.post('/profile-image', function(req, res) {
@@ -490,7 +490,7 @@ app.get('/get_comments', function(req, response){
 });
 
 app.post('/set_likes', function(req, response){
-
+	
 	var feedID = req.query.feed_id;
 	var numOfLikes =  req.query.likes;
 	var likes = parseInt(numOfLikes) + 1;
@@ -601,7 +601,7 @@ app.get('/get_friends', function(req, res, err){
 			var friends = results[0]['friends'];
 			res.send(friends);
 		}
-
+		
 	})
 	//res.send(req.session.)
 });
@@ -624,10 +624,35 @@ app.get('/get_msg', function(req, response, err){
 		response.end();
 	});
 });
+//send_message?to=1&to_name=mini%20the%20cat&from=2&from_name=sed&msg=hey
+app.post('/send_message', function(req, response, err){
+	
+	//to_id	to_name	from_id	from_name	msg
+	var to = req.query.to;
+	var to_name = req.query.to_name;
+	var from = req.query.from;
+	var from_name = req.query.from_name;
+	var msg = req.query.msg;
+
+	console.log(to + " " + to_name + " " + from + " " + from_name + " " + msg );
+
+	connection.query("INSERT INTO messages (`to_id`, `to_name`, `from_id`, `from_name`, `msg`) VALUES (?,?,?,?,?)",[to, to_name, from , from_name, msg], 
+	function(error, results, fields) {
+		if(error){
+			console.log(error.message);
+		}
+		else if (results.length > 0) {
+			console.log("succcessfully added msg");
+			//response.send(results);
+		}
+		response.end();
+	});
+});
 
 app.get('/get_profile', function(req, response, err){
 	var user_id = req.session.user_id;
 	connection.query("SELECT * FROM users where `to_id`= ?",[user_id], function(error, results, fields) {
+
 		if(error){
 			console.log(error.message);
 		}
@@ -666,3 +691,4 @@ app.use(function (req, res, next) {
 app.listen(port, function () {
         console.log('Example app listening on port' + port + '!');
 });
+"INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)"

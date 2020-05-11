@@ -490,7 +490,7 @@ app.get('/get_comments', function(req, response){
 });
 
 app.post('/set_likes', function(req, response){
-	
+
 	var feedID = req.query.feed_id;
 	var numOfLikes =  req.query.likes;
 	var likes = parseInt(numOfLikes) + 1;
@@ -601,7 +601,7 @@ app.get('/get_friends', function(req, res, err){
 			var friends = results[0]['friends'];
 			res.send(friends);
 		}
-		
+
 	})
 	//res.send(req.session.)
 });
@@ -614,6 +614,20 @@ app.get('/get_msg', function(req, response, err){
 	var from = req.query.from;
 
 	connection.query("SELECT * FROM messages where (`to_id`= ? AND `from_id`=? ) OR ( `to_id`= ? AND `from_id`=? ) ",[to, from, from , to], function(error, results, fields) {
+		if(error){
+			console.log(error.message);
+		}
+		else if (results.length > 0) {
+			console.log("sending msg");
+			response.send(results);
+		}
+		response.end();
+	});
+});
+
+app.get('/get_profile', function(req, response, err){
+	var user_id = req.session.user_id;
+	connection.query("SELECT * FROM users where `to_id`= ?",[user_id], function(error, results, fields) {
 		if(error){
 			console.log(error.message);
 		}

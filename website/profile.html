@@ -7,9 +7,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<link rel = "stylesheet" type = "text/css" href = "style.css" />
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="profile.js"></script>
+
 	<title>Document</title>
 </head>
-<body id="profile_body">
+<body onload = "initialize()" id="profile_body">
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top"  style="min-height: 54px; min-width:200px;">
 		<div class="container-fluid" style="min-height: 42px;">
 			<ul class="navbar-nav align-items-left">
@@ -42,7 +44,12 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<div onclick ="sendFriendRequest()"> Follow </div>
+
+	
 	<div id="profile_wrapper">
+	<!--
 		<ul id="profile_list">
 			<li id= "profile_name">
 				<p id="profile_name">Minni the kitten</p>
@@ -56,44 +63,10 @@
 				<p id="progile_other">I'm 2 month old Maine coon</p>
 			</li>
 		</ul>
+	!-->
 	</div>
-	<div class="container">
-	  <div class="row">
-	    <div class="col-3">
-	    </div>
-		<div class="col-sm-6 center">
-			<div class="card-group scroll">
-				<div>
-					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-					<div class = "col-4 centered">
-					  <h3>Person Human</h3>
-					</div>
-					  <label class="btn btn-link col-4">
-						<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Accept</i> </button>
-					  </label>
-					  <label class="btn btn-link col-4">
-						<button class="btn btn-block btn-danger"><i class="fa fa-thumbs-up">Reject</i> </button>
-					  </label>
-					</div>
-				</div>
-				<div>
-					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-					<div class = "col-4 centered">
-					  <h3>Person Human</h3>
-					</div>
-					  <label class="btn btn-link col-4">
-						<button class="btn btn-block btn-success"><i class="fa fa-thumbs-up">Accept</i> </button>
-					  </label>
-					  <label class="btn btn-link col-4">
-						<button class="btn btn-block btn-danger"><i class="fa fa-thumbs-up">Reject</i> </button>
-					  </label>
-					</div>
-				</div>
-			</div>
-		</div>
-	    <div class="col-3">
-	    </div>
-	  </div>
-	</div>
+	
+	
+	<script src="notification.js"></script>
 </body>
 </html>

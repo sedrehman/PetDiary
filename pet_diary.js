@@ -158,7 +158,7 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
 	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)",
-	[sess.user_id, sess.username, "text", feed_body], function(err, result){
+	[req.session.user_id, req.session.username, "text", feed_body], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -171,11 +171,7 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 
 app.post('/profile-image', function(req, res) {
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 	upload(req, res, (err) => {
 		if(err){
 			console.log("~~~errrrrrroooooorrrrr~~~");
@@ -187,7 +183,7 @@ app.post('/profile-image', function(req, res) {
 				console.log("##########################");
 				console.log(req.file.filename);
 				console.log("##########################");
-				connection.query("UPDATE users SET profile_image = `description`=? where `id`=?",["images/"+req.file.filename, sess.user_id], function(err, result){
+				connection.query("UPDATE users SET profile_image = `description`=? where `id`=?",["images/"+req.file.filename, req.session.user_id], function(err, result){
 				    if(err){
 						throw err;
 					}else{
@@ -208,18 +204,14 @@ app.post('/profile-image', function(req, res) {
 
 app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res) {
 	console.log("here "+ req.query);
-	if(sess == undefined){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
-	connection.query("INSERT INTO comments ( `feed_id`, `username`, `comment`) VALUES (?,?,?)", [feedID, sess.username, feed_body], function(err, result){
+	connection.query("INSERT INTO comments ( `feed_id`, `username`, `comment`) VALUES (?,?,?)", [feedID, req.session.username, feed_body], function(err, result){
         if(err){
 			throw err;
 		}else{
@@ -232,11 +224,7 @@ app.post('/comment-sub', textUpload.single("feed_text_body") ,function(req, res)
 
 
 app.post('/image_submit', function(req, res) {
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 	upload(req, res, (err) => {
 		if(err){
 			console.log("~~~errrrrrroooooorrrrr~~~");
@@ -249,7 +237,7 @@ app.post('/image_submit', function(req, res) {
 				console.log(req.file.filename);
 				console.log("##########################");
 
-				connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [sess.user_id, sess.username, "img","images/"+req.file.filename ], function(err, result){
+				connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [req.session.user_id, req.session.username, "img","images/"+req.file.filename ], function(err, result){
 				    if(err){
 						throw err;
 					}else{
@@ -412,6 +400,7 @@ app.post('/auth', function(request, response) {
 				console.log(results[0]['email']);
 				request.session.user_id = results[0]['id'];
 				request.session.token = results[0]['email'];
+				request.session.username = results[0]['name'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
@@ -449,11 +438,7 @@ app.get('/get_feed', function(req, response){
 
 
 app.get('/get_single_feed', function(req, response){
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
@@ -514,14 +499,10 @@ app.post('/set_likes', function(req, response){
 	});
 });
 app.post('/reject_request', function(req, response){
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 
-	var receiver_id = req.sess.user_id;
-	var sender_id = req.sess.sender_id;
+	var receiver_id = req.session.user_id;
+	var sender_id = req.session.sender_id;
 
 	var receiver_friends = 'SELECT friends FROM users WHERE id = ';
 
@@ -549,15 +530,11 @@ app.post('/reject_request', function(req, response){
 });
 
 app.post('/accept_request', function(req, response){
-	if(!sess.user_id){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
 
-	var receiver_id = req.sess.user_id;
 
-	var sender_id = req.sess.sender_id;
+	var receiver_id = req.session.user_id;
+
+	var sender_id = req.session.sender_id;
 	var requests =
 
 	//friends_rec = friends_rec + ;
@@ -682,6 +659,19 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
     });
 
 }) ;
+
+app.get("/getInfo", function(req, res, err){
+	var person_id = req.query.ide;
+	connection.query("SELECT * from users WHERE id=?",[person_id], function(error, results, fields){
+		if(error){
+			console.log(error.message);
+		}else{
+			console.log("sending other's info");
+			res.send(results);
+		}
+	});
+});
+
 
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);

@@ -16,12 +16,12 @@ function person(name, id) {
 }
 
 function getMessages(){
-	alert(currentFriend)
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
 			messages = JSON.parse(this.response);
 			createText();
+			setInterval(getMessages(), 5000);
 		}	
 	};
 	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	

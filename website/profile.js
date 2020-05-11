@@ -47,6 +47,7 @@ function getBio(){
 		}
 	};
 	var hi = document.URL;
+	console.log(hi.includes("ide"))
 	if(hi.includes("ide"))
 	{
 		isMe = true;

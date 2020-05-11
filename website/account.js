@@ -36,10 +36,10 @@ function sendRequest(data){
     var pageuser_id = list[0].pageuser_id;
     var userid = list[0].user_if;
     if(pageuser_id == userid){
-        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p><br><button>Follow</button></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
+        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src=\"profileimage\" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">\"user_name\"</p><br><button>Follow</button></li><li id= \"profile_info\"><p id=\"progile_other\">\"description\"</p></li></ul></div>"
     }
     else{
-        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src="profileimage" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">"user_name"</p></li><li id= \"profile_info\"><p id=\"progile_other\">"description"</p></li></ul></div>"
+        post_body.innerHTML = "<div id=\"profile_wrapper\"><ul id=\"profile_list\"><li><img src=\"profileimage\" alt=\"cuter kitten\" id=\"profile_img\"></li><li id= \"profile_name\"><p id=\"profile_name\">\"user_name\"</p></li><li id= \"profile_info\"><p id=\"progile_other\">\"description\"</p></li></ul></div>"
     }
 }
 

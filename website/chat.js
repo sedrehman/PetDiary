@@ -8,10 +8,6 @@ var user
 function initialize(){
 	getUser()
 	getFriends();
-	
-	//parseFriends(friends);
-
-	//createFriends();
 }
 
 function person(name, id) {
@@ -19,12 +15,13 @@ function person(name, id) {
 	this.name = name
 }
 
-function getMessages(friend){
+function getMessages(){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
 			messages = JSON.parse(this.response);
 			createText();
+			setInterval(getMessages(), 5000);
 		}	
 	};
 	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	
@@ -52,6 +49,7 @@ function getFriends(){
 		if(this.readyState === 4 && this.status === 200){	
 			parseFriends(this.response);
 			createFriends();
+			getMessages();
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -70,7 +68,6 @@ function createFriends(){
 		b.innerHTML = "<div id = \"ha\" onclick = \"loadNewMessages('"+friends[i].id+"')\"><div id = \"friend\">"+friends[i].name+"</div></div>";
 		box.appendChild(b);
 	}
-	getMessages(currentFriend);
 }
 
 function loadNewMessages(newC){
@@ -82,7 +79,7 @@ function loadNewMessages(newC){
 			break;
 		}
 	}
-	createText()
+	getMessages();
 }
 
 function parseFriends(sup){
@@ -98,10 +95,14 @@ function parseFriends(sup){
 }
 
 function createText(){
-	getMessages(currentFriend)
 	box = document.getElementById("begginningText");
-	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
+//	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
 	b = document.createElement('span');
+	
+	while (box.firstChild) {
+		box.removeChild(box.lastChild);
+	}
+	
 	for(i =0;i<messages.length;i++)
 	{
 		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].msg+"</span><div id = \"textRecieve\">Message Example</div></div></div></div>"
@@ -120,14 +121,9 @@ function sendMessage() {
 		{
 		}
 	}
-	request.open("POST", "WebServer.py");
-	request.send("/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
+	request.open("POST", "/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
+	request.send();
 	talk.focus();
 	createText();
 	return false;
 }
-
-/*function getFakeFriends()
-{
-	friends = [new person ("you",1),new person ("are",2),new person ("my",3),new person ("FRIEND",4)]
-}*/

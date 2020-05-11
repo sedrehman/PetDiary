@@ -153,11 +153,7 @@ app.get('/', function (req, res) {
 
 
 app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
-	if(sess == undefined){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
+	
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
@@ -173,25 +169,6 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 
 }) ;
 
-app.post('/description', textUpload.single("feed_text_body") ,function(req, res) {
-	if(sess == undefined){
-		res.sendFile(__dirname + "/website/login.html");
-		res.end();
-		return;
-	}
-	var feed_body = req.body["feed_text_body"];
-	feed_body = removeBadChars(feed_body);
-	//console.log(feed_body);
-	connection.query("UPDATE users SET bio = `bio`=? where `id`=?",[feed_body, sess.user_id], function(err, result){
-        if(err){
-			throw err;
-		}else{
-			console.log("record inserted into description");
-			res.redirect('./home.html');
-		}
-    });
-
-}) ;
 
 app.post('/profile-image', function(req, res) {
 	if(!sess.user_id){
@@ -662,6 +639,23 @@ app.get('/get_profile', function(req, response, err){
 	});
 });
 
+
+app.post('/description', textUpload.single("feed_text_body") ,function(req, res) {
+
+	var feed_body = req.body["feed_text_body"];
+	feed_body = removeBadChars(feed_body);
+	console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+feed_body);
+	//UPDATE feed SET `likes`=? WHERE `feed_id`=?"
+	connection.query( "UPDATE users SET `bio` = ? WHERE `id` = ? " , [feed_body, req.session.user_id], function(err, result){
+        if(err){
+			console.log(err.message);
+		}else{
+			console.log("record inserted into description");
+			res.redirect('./home.html');
+		}
+    });
+
+}) ;
 
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);

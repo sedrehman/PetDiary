@@ -89,7 +89,7 @@ function parseFriends(sup){
 	}
 	currentFriend = friends[0];
 	getMessages();
-	setInterval(getMessages(), 5000);
+	setInterval(getMessages, 5000);
 	//getMessages(currentFriend);
 }
 

@@ -15,7 +15,8 @@ function person(name, id) {
 	this.name = name
 }
 
-function getMessages(friend){
+function getMessages(){
+	alert(currentFriend)
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
@@ -66,7 +67,6 @@ function createFriends(){
 		b.innerHTML = "<div id = \"ha\" onclick = \"loadNewMessages('"+friends[i].id+"')\"><div id = \"friend\">"+friends[i].name+"</div></div>";
 		box.appendChild(b);
 	}
-	getMessages(currentFriend);
 }
 
 function loadNewMessages(newC){

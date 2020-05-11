@@ -2,6 +2,7 @@ var friends = []
 var currentFriend
 var user 
 var personProfile
+var ide 
 
 function initialize(){
 	getUser()
@@ -46,9 +47,9 @@ function getBio(){
 			createBio(JSON.parse(this.response));
 		}
 	};
-	var ide = document.URL;
-	var idx = ide.indexOf("ide");
-	ide = ide.slice(idx+4, ide.length);
+	var hi = document.URL;
+	var idx = hi.indexOf("ide");
+	ide = hi.slice(idx+4, ide.length);
 	request.open("GET", "/getInfo?ide="+ide, true);	
 	request.send();
 }

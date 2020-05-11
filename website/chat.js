@@ -126,8 +126,3 @@ function sendMessage() {
 	createText();
 	return false;
 }
-
-/*function getFakeFriends()
-{
-	friends = [new person ("you",1),new person ("are",2),new person ("my",3),new person ("FRIEND",4)]
-}*/

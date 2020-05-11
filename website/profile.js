@@ -61,6 +61,7 @@ function parseFriends(sup){
 		var hi = one[i].split("@@@");
 		friends.push(new person(hi[0],hi[1]));
 	}
+	createFriend();
 }
 
 function createBio(help){
@@ -71,7 +72,28 @@ function createBio(help){
 	box.insertBefore(b,box.firstChild);
 }
 
+function createFriend(){
+	fBox = document.getElementById("friendTemplate");
+	if(checkFriend()){
+		fBox.innerHTML = "<div> Already Following </div>";
+	}
+	else
+	{
+		fBox.innerHTML = "<div onclick =\"sendFriendRequest()\"> Follow </div>";
+	}
+}
+
+function checkFriend(){
+	for(i = 0;i<friends.length;i++)
+	{
+		if(ide==friends[i].id)
+			return true;
+	}
+	return false
+}
+
 function sendFriendRequest() {
+	fBox = document.getElementById("friendTemplate");
 	const request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(this.readyState==4 && this.status == 200)
@@ -80,5 +102,6 @@ function sendFriendRequest() {
 	}
 	request.open("POST", "/follow?ide="+ide);
 	request.send();
+	fBox.innerHTML = "<div> Already Following </div>";
 	return false;
 }

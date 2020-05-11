@@ -643,6 +643,21 @@ app.get('/send_message', function(req, response, err){
 	});
 });
 
+app.get('/get_profile', function(req, response, err){
+	var user_id = req.session.user_id;
+	connection.query("SELECT * FROM users where `to_id`= ?",[user_id], function(error, results, fields) {
+
+		if(error){
+			console.log(error.message);
+		}
+		else if (results.length > 0) {
+			console.log("sending msg");
+			response.send(results);
+		}
+		response.end();
+	});
+});
+
 
 app.post('/description', textUpload.single("feed_text_body") ,function(req, res) {
 

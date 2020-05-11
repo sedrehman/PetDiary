@@ -21,7 +21,6 @@ function getMessages(){
 		if	(this.readyState === 4 && this.status === 200){	
 			messages = JSON.parse(this.response);
 			createText();
-			setInterval(getMessages(), 5000);
 		}	
 	};
 	request.open("GET", "/get_msg?to="+user.id+"&from="+currentFriend.id+"", true);	
@@ -50,6 +49,7 @@ function getFriends(){
 			parseFriends(this.response);
 			createFriends();
 			getMessages();
+			setInterval(getMessages(), 5000);
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -79,7 +79,6 @@ function loadNewMessages(newC){
 			break;
 		}
 	}
-	getMessages();
 }
 
 function parseFriends(sup){

@@ -211,3 +211,8 @@ h1
 	width:99%;
 	text-align:center;
 }
+
+.scroll {
+    max-height: 100px;
+    overflow-y: auto;
+}

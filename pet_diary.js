@@ -662,6 +662,7 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
 
 app.get("/getInfo", function(req, res, err){
 	var person_id = req.query.ide;
+	console.log("looking for ~~"+ person_id);
 	connection.query("SELECT * from users WHERE id=?",[person_id], function(error, results, fields){
 		if(error){
 			console.log(error.message);
@@ -672,6 +673,70 @@ app.get("/getInfo", function(req, res, err){
 	});
 });
 
+///follow?ide=1
+app.post("/follow", function(req, res, err){
+	var person_id = req.query.ide;
+	console.log("looking for ~~"+ person_id);
+	
+	var person_name;
+	var person_friends;
+	var user_friends;
+
+	connection.query("SELECT * from users WHERE id = ?",[req.session.user_id], function(error, results, fields){
+		if(error){
+			console.log(error.message);
+		}else{
+			user_friends = results[0]['friends'];
+		}
+	});
+	connection.query("SELECT * from users WHERE id=?",[person_id], function(error, results, fields){
+		if(error){
+			console.log(error.message);
+		}else{
+			person_name = results[0]['name'];
+			person_friends = results[0]['friends'];
+		}
+	});
+
+	//user
+	if( user_friends && user_friends.length < 6){
+		var user_friends_ = person_name+"@@@" + person_id;
+		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[user_friends_, req.session.user_id], function(error, results, fields){
+			if(error){
+				console.log(error.message);
+			}
+		});
+	}else{
+		//name@@@id###### .... 
+		var user_friends_ = "######"+person_name+"@@@" + person_id;
+		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[user_friends_, req.session.user_id], function(error, results, fields){
+			if(error){
+				console.log(error.message);
+			}
+		});
+
+	}
+
+	//person
+	if(person_friends && person_friends.length < 2){
+		var person_friends_ = req.session.username+"@@@" + req.session.user_id;
+		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[person_friends_, person_id], function(error, results, fields){
+			if(error){
+				console.log(error.message);
+			}
+		});
+	}else{
+		//name@@@id###### .... 
+		var person_friends_ = "######"+req.session.username+"@@@" + req.session.user_id;
+		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[person_friends_, person_id], function(error, results, fields){
+			if(error){
+				console.log(error.message);
+			}
+		});
+
+	}
+	
+});
 
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);

@@ -2,7 +2,7 @@ var friends = []
 var currentFriend
 var user 
 var personProfile
-var ide 
+var ide = -1;
 var isMe = false
 
 function initialize(){
@@ -43,7 +43,6 @@ function getBio(){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if(this.readyState === 4 && this.status === 200){	
-			alert(JSON.parse(this.response));
 			createBio(JSON.parse(this.response));
 		}
 	};
@@ -91,6 +90,7 @@ function createFriend(){
 }
 
 function checkFriend(){
+	console.log(friends)
 	for(i = 0;i<friends.length;i++)
 	{
 		if(ide==friends[i].id)

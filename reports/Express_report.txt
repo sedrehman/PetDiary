@@ -9,7 +9,7 @@ Express.js is a web application framework. It’s built on top of Node.js which 
 
 
 What does Express.js accomplish in PetDiary
-It builds the sockets for us and handles HTTP functions such as GET and POST. It handles the server-side GET requests in a simple manner. All you have to do is set a path to a specific request in a single line of code. It then reads that set path and sends the file requested. It can be images, CSS, HTML or whatever you wish to send. Its reduces the workload you would have to go through to create a server manually. No more byte parsing or string parsing.
+It builds the sockets for us and handles HTTP functions such as GET and POST. It handles the server-side GET requests in a simple manner. All you have to do is set a path to a specific request in a single line of code. It then reads that set path and sends the file requested. It can be images, CSS, HTML or whatever you wish to send. Its reduces the workload you would have to go through to create a server manually. No more byte parsing or string parsing. The parsing done by express ca be found here(https://github.com/expressjs/express/blob/master/lib/utils.js) where it reads the body and header and parses the incoming information. Express handles incomming requests(https://github.com/expressjs/express/blob/master/lib/request.js) where in function like req.range it parses header length, req param which in turn return the header names, in the bottom of the code DefineGetter checks the incomming request for what type if its HTTP or HTTPS. For response express is here (https://github.com/expressjs/express/blob/master/lib/response.js) in here express handles by calculing the chunk size with buffer then adding the length to Content-Length header.
 
 We create it in the code
 const app = express();
@@ -23,7 +23,7 @@ We use it for get functions in our code in sections usch as
 app.get('/', function (req, res) {
 	if(sess == undefined){
 		res.sendFile(__dirname + "/website/login.html");
-		
+
 	}else{
 		res.sendFile(__dirname + "/website/signUp.html");
 	}
@@ -31,12 +31,12 @@ app.get('/', function (req, res) {
 Where we get the log in or signup page depending on the situation.
 Another example would be
 app.get('/get_comments', function(req, response){
-	
+
 	var feedID = req.query.feed_id;
 	console.log("~~~~~~~~~~~~~~feed id is:"+feedID);
 
 	connection.query("SELECT * FROM comments where `feed_id`= ?",[feedID], function(error, results, fields) {
-		
+
 		if(error){
 			response.send('errrrroor!!!');
 		}

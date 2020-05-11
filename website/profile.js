@@ -3,25 +3,24 @@ var currentFriend
 var user 
 var personProfile
 var ide 
+var isMe = false
 
 function initialize(){
-	getUser()
-	getFriends();
-	getBio();
+	getUser();
 }
 
 function person(name, id) {
-	this.id = id
-	this.name = name
+	this.id = id;
+	this.name = name;
 } 
 
 function getUser(){
-
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if	(this.readyState === 4 && this.status === 200){	
 			bob = this.response.split("######");
 			user = new person(bob[0],bob[1])
+			getFriends();
 		}	
 	};
 	request.open("GET", "/get_person", true);	
@@ -33,6 +32,7 @@ function getFriends(){
 	request.onreadystatechange = function(){	
 		if(this.readyState === 4 && this.status === 200){	
 			parseFriends(this.response);
+			getBio();
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -48,8 +48,15 @@ function getBio(){
 		}
 	};
 	var hi = document.URL;
-	var idx = hi.indexOf("ide");
-	ide = hi.slice(idx+4, hi.length);
+	if(hi.includes("ide")
+	{
+		isMe = true;
+		var idx = hi.indexOf("ide");
+		ide = hi.slice(idx+4, hi.length);
+	}
+	else{
+		ide = user.id
+	}
 	request.open("GET", "/getInfo?ide="+ide, true);	
 	request.send();
 }
@@ -77,9 +84,9 @@ function createFriend(){
 	if(checkFriend()){
 		fBox.innerHTML = "<div> Already Following </div>";
 	}
-	else
+	else if(isMe)
 	{
-		fBox.innerHTML = "<div onclick =\"sendFriendRequest()\"> Follow </div>";
+		fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
 	}
 }
 

@@ -48,8 +48,6 @@ function getFriends(){
 		if(this.readyState === 4 && this.status === 200){	
 			parseFriends(this.response);
 			createFriends();
-			getMessages();
-			setInterval(getMessages(), 5000);
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -90,6 +88,8 @@ function parseFriends(sup){
 		friends.push(new person(hi[0],hi[1]));
 	}
 	currentFriend = friends[0];
+	getMessages();
+	setInterval(getMessages(), 5000);
 	//getMessages(currentFriend);
 }
 

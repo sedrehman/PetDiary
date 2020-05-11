@@ -49,6 +49,7 @@ function getFriends(){
 		if(this.readyState === 4 && this.status === 200){	
 			parseFriends(this.response);
 			createFriends();
+			getMessages();
 		}
 	};
 	request.open("GET", "/get_friends", true);	
@@ -78,7 +79,7 @@ function loadNewMessages(newC){
 			break;
 		}
 	}
-	createText()
+	getMessages();
 }
 
 function parseFriends(sup){

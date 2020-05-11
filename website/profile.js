@@ -48,7 +48,7 @@ function getBio(){
 	};
 	var ide = document.URL;
 	var idx = ide.indexOf("ide");
-	ide = ide.slice(idx+8, ide.length);
+	ide = ide.slice(idx+4, ide.length);
 	request.open("GET", "/getInfo?ide="+ide, true);	
 	request.send();
 }

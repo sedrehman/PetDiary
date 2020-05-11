@@ -3,7 +3,6 @@ var currentFriend
 var user 
 var personProfile
 var ide = -1;
-var isMe = false
 
 function initialize(){
 	getUser();
@@ -47,10 +46,8 @@ function getBio(){
 		}
 	};
 	var hi = document.URL;
-	console.log(hi.includes("ide"))
 	if(hi.includes("ide"))
 	{
-		isMe = true;
 		var idx = hi.indexOf("ide");
 		ide = hi.slice(idx+4, hi.length);
 	}
@@ -81,17 +78,18 @@ function createBio(help){
 
 function createFriend(){
 	fBox = document.getElementById("friendTemplate");
-	if(checkFriend()){
-		fBox.innerHTML = "<div> Already Following </div>";
-	}
-	else if(ide != user.id)
-	{
-		fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
+	if(ide != user.id){
+		if(checkFriend()){
+			fBox.innerHTML = "<div> Already Following </div>";
+		}
+		else()
+		{
+			fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
+		}
 	}
 }
 
 function checkFriend(){
-	console.log(friends)
 	for(i = 0;i<friends.length;i++)
 	{
 		if(ide==friends[i].id)

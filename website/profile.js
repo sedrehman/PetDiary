@@ -84,7 +84,7 @@ function createFriend(){
 	if(checkFriend()){
 		fBox.innerHTML = "<div> Already Following </div>";
 	}
-	else if(isMe)
+	else if(ide != user.id)
 	{
 		fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
 	}

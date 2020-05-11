@@ -46,7 +46,9 @@ function getFriends(){
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){	
 		if(this.readyState === 4 && this.status === 200){	
+			console.log(this.response);
 			parseFriends(this.response);
+
 			createFriends();
 		}
 	};
@@ -80,7 +82,8 @@ function loadNewMessages(newC){
 }
 
 function parseFriends(sup){
-	var one = sup.split("#######");
+	var one = sup.split("######");
+	console.log(one);
 	for(var i =0;i<one.length;i++)
 	{
 		console.log(i + "~~~");

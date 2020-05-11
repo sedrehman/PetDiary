@@ -329,7 +329,7 @@ app.post('/signup_form' , function(request, response){
 						console.log(err.message);
 					}
 				});
-				req_path
+				
 				response.redirect('./login.html');
 			}else{
 				err_mid = "Please Enter a valid name";
@@ -398,7 +398,6 @@ app.post('/auth', function(request, response) {
 	console.log("~~~~~~~~~~~~~~~log in ~~~~~~~~~~~~~~~~~");
 
 	if (username && password) {
-		sess = request.session;
 
 		connection.query("SELECT * from users WHERE email=? AND password=?",[username, password], function(error, results, fields) {
 			console.log(results);
@@ -409,13 +408,16 @@ app.post('/auth', function(request, response) {
 				response.send('Incorrect Username and/or Password!');
 			}
 			else if (results.length > 0) {
-
+				console.log(results[0]['id']);
+				console.log(results[0]['email']);
 				request.session.user_id = results[0]['id'];
 				request.session.token = results[0]['email'];
 				// console.log(results[0]['id']);
 				console.log("logged in! ");
 				response.redirect('./home.html');
 
+			}else{
+				response.send('Incorrect Username and/or Password!');
 			}
 			response.end();
 		});
@@ -599,6 +601,7 @@ app.get('/get_friends', function(req, res, err){
 			console.log(error.message);
 		}else{
 			var friends = results[0]['friends'];
+			console.log("all frineds"+ friends);
 			res.send(friends);
 		}
 		

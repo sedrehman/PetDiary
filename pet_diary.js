@@ -393,9 +393,8 @@ app.post('/auth', function(request, response) {
 			// console.log(results[0].length);
 			// console.log(results[0]);
 			if(error){
-				response.send('Incorrect Username and/or Password!');
-			}
-			else if (results.length > 0) {
+				response.send('Incorrect Username and/or Password!');username
+			}else if (results.length > 0) {
 				console.log(results[0]['id']);
 				console.log(results[0]['email']);
 				request.session.user_id = results[0]['id'];
@@ -676,65 +675,71 @@ app.get("/getInfo", function(req, res, err){
 ///follow?ide=1
 app.post("/follow", function(req, res, err){
 	var person_id = req.query.ide;
-	console.log("looking for ~~"+ person_id);
+	console.log("looking for ~~ \""+ person_id + "\"");
 	
 	var person_name;
 	var person_friends;
 	var user_friends;
 
-	connection.query("SELECT * from users WHERE id = ?",[req.session.user_id], function(error, results, fields){
+	connection.query("SELECT * from `users` WHERE `id` = ?",[req.session.user_id], function(error, results, fields){
 		if(error){
 			console.log(error.message);
 		}else{
 			user_friends = results[0]['friends'];
+			console.log(results);
+			console.log("user name : " + req.session.username);
+
+			connection.query("SELECT * from `users` WHERE `id` = ?",[person_id], function(error2, results, fields){
+				if(error){
+					console.log(error2.message);
+				}else{
+					person_name = results[0]['name'];
+					console.log(results);
+					person_friends = results[0]['friends'];
+					console.log("persons name : " + person_name);
+
+
+					//user
+					var user_friends__ = "";
+					if(!user_friends || user_friends.length < 6){
+						user_friends__ = person_name+"@@@" + person_id;
+					}else{
+						user_friends__ = user_friends + "######"+person_name+"@@@" + person_id;
+					}
+					console.log("here~~~~~~0");
+					connection.query("UPDATE `users` SET `friends` = ? WHERE `id` = ?",[user_friends__, req.session.user_id], function(e){
+						console.log("here~~~~~~1");
+						if(e){
+							console.log(e.message);
+						}
+					});
+					console.log("here~~~~~~2");
+					
+
+					//person
+					var person_friends__ = "";
+					if(!person_friends || person_friends.length < 6){
+						person_friends__ = req.session.username + "@@@" + req.session.user_id;
+					}else{
+						person_friends__ = person_friends + "######" + req.session.username + "@@@" + req.session.user_id;
+					}
+					console.log("here~~~~~~3");
+					connection.query("UPDATE `users` SET `friends` = ? WHERE `id` = ?",[person_friends__, person_id], function(e){
+						console.log("here~~~~~~4");
+						if(e){
+							console.log(e.message);
+						}
+					});
+					console.log("here~~~~~~5");
+				}
+			});
 		}
 	});
-	connection.query("SELECT * from users WHERE id=?",[person_id], function(error, results, fields){
-		if(error){
-			console.log(error.message);
-		}else{
-			person_name = results[0]['name'];
-			person_friends = results[0]['friends'];
-		}
-	});
+	
 
-	//user
-	if( user_friends && user_friends.length < 6){
-		var user_friends_ = person_name+"@@@" + person_id;
-		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[user_friends_, req.session.user_id], function(error, results, fields){
-			if(error){
-				console.log(error.message);
-			}
-		});
-	}else{
-		//name@@@id###### .... 
-		var user_friends_ = "######"+person_name+"@@@" + person_id;
-		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[user_friends_, req.session.user_id], function(error, results, fields){
-			if(error){
-				console.log(error.message);
-			}
-		});
+	
 
-	}
-
-	//person
-	if(person_friends && person_friends.length < 2){
-		var person_friends_ = req.session.username+"@@@" + req.session.user_id;
-		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[person_friends_, person_id], function(error, results, fields){
-			if(error){
-				console.log(error.message);
-			}
-		});
-	}else{
-		//name@@@id###### .... 
-		var person_friends_ = "######"+req.session.username+"@@@" + req.session.user_id;
-		connection.query("UPDATE users SET friends = friends + ? WHERE id = ?",[person_friends_, person_id], function(error, results, fields){
-			if(error){
-				console.log(error.message);
-			}
-		});
-
-	}
+	
 	
 });
 

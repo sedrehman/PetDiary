@@ -34,7 +34,7 @@ function getPosts(hello){
 	// console.log("####################################");
 	// console.log(dictionary.length);
 
-	for (i = 0; i < dictionary.length; i++)
+	for (i = dictionary.length-1; i >-1; i--)
 	{
 		x = new post(dictionary[i].user_name, dictionary[i].type, dictionary[i].name, dictionary[i].likes, dictionary[i].feed_id,dictionary[i].id);
 		//console.log(x);

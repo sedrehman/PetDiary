@@ -2,7 +2,7 @@ var friends = []
 var currentFriend
 var user 
 var personProfile
-var ide = -1;
+var ide
 
 function initialize(){
 	getUser();
@@ -65,7 +65,6 @@ function parseFriends(sup){
 		var hi = one[i].split("@@@");
 		friends.push(new person(hi[0],hi[1]));
 	}
-	createFriend();
 }
 
 function createBio(help){
@@ -74,6 +73,7 @@ function createBio(help){
 	b = document.createElement('span');
 	b.innerHTML="<ul id=\"profile_list\"><li id= \"profile_name\"><p id=\"profile_name\">"+help.name+"</p></li><div class = \"col 5\"><li ><img src=\"images/blank-profile-picture.png\" alt=\"images/blank-profile-picture.png\" id=\"profile_img\"></li></div><li id= \"profile_info\"><p id=\"progile_other\">"+help.bio+"</p></li></ul>"
 	box.insertBefore(b,box.firstChild);
+	createFriend();
 }
 
 function createFriend(){
@@ -82,9 +82,14 @@ function createFriend(){
 		if(checkFriend()){
 			fBox.innerHTML = "<div> Already Following </div>";
 		}
-		else(){
+
+		else{
 			fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
 		}
+	}
+	else
+	{
+		fBox.innerHTML = "";
 	}
 }
 

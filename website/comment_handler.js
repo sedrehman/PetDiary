@@ -94,7 +94,7 @@ function getComments(hello){
 	var i;
 	var list = [];
 	var dictionary = hello;
-	for (i = 0; i < dictionary.length; i++)
+	for (i = dictionary.length-1; i>-1; i--)
 	{
 		x = new comment(dictionary[i].username, dictionary[i].comment);
 		console.log(x);

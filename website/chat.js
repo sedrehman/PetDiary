@@ -117,6 +117,6 @@ function sendMessage() {
 	request.open("POST", "/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
 	request.send();
 	talk.focus();
-	createText();
+	getMessages();
 	return false;
 }

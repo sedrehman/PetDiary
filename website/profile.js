@@ -82,8 +82,7 @@ function createFriend(){
 		if(checkFriend()){
 			fBox.innerHTML = "<div> Already Following </div>";
 		}
-		else()
-		{
+		else(){
 			fBox.innerHTML = "<button onclick =\"sendFriendRequest()\"> Follow </button>";
 		}
 	}

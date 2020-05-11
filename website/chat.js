@@ -98,7 +98,7 @@ function parseFriends(sup){
 }
 
 function createText(){
-	getMessages(currentFriend)
+	
 	box = document.getElementById("begginningText");
 	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
 	b = document.createElement('span');

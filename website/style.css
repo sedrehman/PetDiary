@@ -178,6 +178,17 @@ h1
 	background-color: blue;
 	color:white;
 }
+#textTwo
+{
+	border-radius: 25px;
+    border-width: 2px;
+	box-sizing: border-box;
+    display:inline-block;
+	padding-left:1%;
+	width:95%;
+	background-color: white;
+	color:black;
+}
 #huh
 {
 	padding-top:1%;

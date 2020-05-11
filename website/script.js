@@ -1,6 +1,7 @@
 function initialize()
 {
 	post_body = document.getElementById("hey")
+	getSQL();
 	setInterval(getSQL, 2000);
 }
 

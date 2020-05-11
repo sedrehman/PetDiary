@@ -1,5 +1,12 @@
-function initialize(){
+var friends = []
+var currentFriend
+var user 
+var personProfile
 
+function initialize(){
+	getUser()
+	getFriends();
+	getBio();
 }
 
 function person(name, id) {
@@ -43,7 +50,7 @@ function getBio(){
 	var ide = document.URL;
 	var idx = ide.indexOf("ide");
 	ide = ide.slice(idx+8, ide.length);
-	request.open("GET", "/getInfo?id=" + ide, true);	
+	request.open("GET", "/getInfo?ide="+ide, true);	
 	request.send();
 }
 
@@ -65,19 +72,13 @@ function createBio(help){
 }
 
 function sendFriendRequest() {
-	talk = document.getElementById("message");
-	mess = talk.value;
-	talk.value = "";
-	oui = mess;
 	const request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
 		if(this.readyState==4 && this.status == 200)
 		{
 		}
 	}
-	request.open("POST", "/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
+	request.open("POST", "/follow?ide="+ide);
 	request.send();
-	talk.focus();
-	createText();
 	return false;
 }

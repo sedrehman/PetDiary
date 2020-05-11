@@ -49,7 +49,7 @@ function checkFileType(file, cb){
 //host: localhost for normal testing
 //mysql for docker
 var connection = mysql.createConnection({
-	host:'localhost',
+	host:'mysql',
 	user:'phpmyadmin',
 	password:'hello123',
 	database:'pet_diary',
@@ -509,7 +509,7 @@ app.post('/reject_request', function(req, response){
 	// var receiver_requests = "";
 	// var sender_friends = "";
 
-	// receiver_requests = receiver_requests + ;
+	// receiver_requests = receiver_requests + ;e9ccb229a23d
 	// sender_friends = sender_friends + ;
 	// receiver_friends = receiver_friends + ,
 
@@ -736,20 +736,13 @@ app.post("/follow", function(req, res, err){
 		}
 	});
 	
-
-	
-
-	
-	
 });
+
 
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);
-    res.status(404).send("404'ed")
 });
-
 
 app.listen(port, function () {
         console.log('Example app listening on port' + port + '!');
 });
-"INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)"

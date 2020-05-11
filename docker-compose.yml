@@ -2,7 +2,7 @@
 version: '3.3'
 services:
   mysql:
-    image: mysql:8.0.20
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 'syedorko21'
       MYSQL_DATABASE: 'pet_diary'

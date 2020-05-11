@@ -620,10 +620,8 @@ app.get('/get_msg', function(req, response, err){
 		if(error){
 			console.log(error.message);
 		}
-		else if (results.length > 0) {
-			console.log("sending msg");
-			response.send(results);
-		}
+		console.log("sending msg");
+		response.send(results);
 		response.end();
 	});
 });

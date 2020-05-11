@@ -103,7 +103,7 @@ function createText(){
 	for(i =0;i<messages.length;i++)
 	{
 		b = document.createElement('span');
-		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].msg+"</span><div id = \"textRecieve\">Message Example</div></div></div></div>"
+		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].from_name+"</span><div id = \"textRecieve\">"+messages[i].msg+"</div></div></div></div>"
 		box.insertBefore(b,box.firstChild);
 	}
 }

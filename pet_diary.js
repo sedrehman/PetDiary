@@ -660,6 +660,19 @@ app.post('/description', textUpload.single("feed_text_body") ,function(req, res)
 
 }) ;
 
+app.get("/getInfo", function(req, res, err){
+	var person_id = req.query.ide;
+	connection.query("SELECT * from users WHERE id=?",[person_id], function(error, results, fields){
+		if(error){
+			console.log(error.message);
+		}else{
+			console.log("sending other's info");
+			res.send(results);
+		}
+	});
+});
+
+
 app.use(function (req, res, next) {
 	console.log("404---->" +req.originalUrl);
     res.status(404).send("404'ed")

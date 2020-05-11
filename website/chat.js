@@ -4,7 +4,7 @@ var friends = []
 var messages 
 var currentFriend
 var user 
-
+var stop
 function initialize(){
 	getUser()
 	getFriends();
@@ -71,6 +71,7 @@ function createFriends(){
 }
 
 function loadNewMessages(newC){
+	clearInterval(stop)
 	for(i =0;i<friends.length;i++)
 	{
 		if(newC == friends[i].id)
@@ -79,6 +80,7 @@ function loadNewMessages(newC){
 			break;
 		}
 	}
+	stop = setInterval(getMessages, 5000);
 }
 
 function parseFriends(sup){
@@ -92,7 +94,7 @@ function parseFriends(sup){
 	}
 	currentFriend = friends[0];
 	getMessages();
-	setInterval(getMessages, 5000);
+	stop = setInterval(getMessages, 5000);
 	//getMessages(currentFriend);
 }
 

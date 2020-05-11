@@ -77,6 +77,7 @@ function loadNewMessages(newC){
 			break;
 		}
 	}
+	remove();
 }
 
 function parseFriends(sup){
@@ -98,14 +99,17 @@ function createText(){
 //	box.innerHTML = "<div class = \"textContainer\" id = \"begginningText\"></div>"
 	b = document.createElement('span');
 	
-	while (box.firstChild) {
-		box.removeChild(box.lastChild);
-	}
-	
 	for(i =0;i<messages.length;i++)
 	{
 		b.innerHTML="<div id = \"huh\"><div id = \"text\"><div><span id = \"dname\">"+ messages[i].msg+"</span><div id = \"textRecieve\">Message Example</div></div></div></div>"
 		box.insertBefore(b,box.firstChild);
+	}
+}
+
+function remove(){
+	box = document.getElementById("begginningText");
+	while (box.firstChild) {
+		box.removeChild(box.lastChild);
 	}
 }
 
@@ -123,6 +127,6 @@ function sendMessage() {
 	request.open("POST", "/send_message?to="+currentFriend.id+"&to_name="+currentFriend.name+"&from="+user.id+"&from_name="+user.name+"&msg="+oui);
 	request.send();
 	talk.focus();
-	createText();
+	remove();
 	return false;
 }

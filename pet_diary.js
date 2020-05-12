@@ -87,13 +87,22 @@ connection.connect(function(err) {
 				console.error('could not make comments table ' + error.message);
 			}
 	});
+	//SELECT `to_id`, `to_name`, `from_id`, `from_name`, `msg` FROM `messages` WHERE 1
+	connection.query(`CREATE TABLE if not exists messages ( to_id int(10) unsigned not null,
+		to_name varchar(255) not null, from_id int(10) unsigned not null, from_name varchar(255) not null,
+		msg varchar(255) );`, function(error, result, fields){
+			if(error){
+				console.error('could not make messages table ' + error.message);
+			}
+	});
 
-	connection.query("CREATE TABLE if not exists lastSave ( file_name int(10) unsigned not null, id int(10) unsigned not null ) ;",
+	connection.query("CREATE TABLE if not exists lastSave ( `file_name` int(10) unsigned not null, id int(10) unsigned not null ) ;",
 		function(error, result, fields){
 			if(error){
 				console.error('could not make comments table ' + error.message);
 			}
 	});
+	
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 	connection.query("SELECT `file_name` FROM lastSave where id=0", function(error, results, fields) {
@@ -103,10 +112,28 @@ connection.connect(function(err) {
 		if(error){
 			console.log("could't load last save");
 		}
-		else{
+		if(results.length < 1){
+			connection.query("INSERT INTO lastSave (`file_name` , `id`) VALUES (?, ?);", [0, 0],
+			function(error, result, fields){
+				if(error){
+					console.error('add to lastSave ' + error.message);
+				}
+			});
+			connection.query("SELECT `file_name` FROM lastSave where id=0", function(error, res, fields) {
+				if(res){
+					file_name = res[0]['file_name'] + 1;
+					console.log("current filename = "+ file_name);
+				}else{
+					console.log("res is null again");
+				}
+			});
+			
+		}else{
+			console.log(results);
 			file_name = results[0]['file_name'] + 1;
 			console.log("current filename = "+ file_name);
 		}
+		
 	});
 });
 
@@ -157,13 +184,13 @@ app.post('/file-text', textUpload.single("feed_text_body") ,function(req, res) {
 	var feed_body = req.body["feed_text_body"];
 	feed_body = removeBadChars(feed_body);
 	//console.log(feed_body);
-	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)",
-	[req.session.user_id, req.session.username, "text", feed_body], function(err, result){
+	connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`, `likes`) VALUES (?,?,?,?,?)",
+	[req.session.user_id, req.session.username, "text", feed_body, 0], function(err, result){
         if(err){
 			throw err;
 		}else{
 			console.log("record innserted into file-image");
-			res.redirect('./home.html');"INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)"
+			res.redirect('./home.html');
     	}
 
 	});

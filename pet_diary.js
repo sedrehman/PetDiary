@@ -264,7 +264,7 @@ app.post('/image_submit', function(req, res) {
 				console.log(req.file.filename);
 				console.log("##########################");
 
-				connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`) VALUES (?,?,?,?)", [req.session.user_id, req.session.username, "img","images/"+req.file.filename ], function(err, result){
+				connection.query("INSERT INTO feed ( id, `user_name`, `type`, `name`, `likes`) VALUES (?,?,?,?,?)", [req.session.user_id, req.session.username, "img","images/"+req.file.filename, 0 ], function(err, result){
 				    if(err){
 						throw err;
 					}else{
